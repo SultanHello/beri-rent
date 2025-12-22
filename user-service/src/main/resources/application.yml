@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: user-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${REALM_URL}
+
+keycloak:
+  baseUrl: ${KEYCLOAK_BASE_URL}
+  realm: ${KEYCLOAK_REALM}
+  clientUser:
+    id: ${KEYCLOAK_USER_CLIENT_ID}
+    secret: ${KEYCLOAK_USER_CLIENT_SECRET}
+  clientAdmin:
+    id: ${KEYCLOAK_ADMIN_CLIENT_ID}
+    secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+    username: ${KEYCLOAK_ADMIN_USERNAME}
+    password: ${KEYCLOAK_ADMIN_PASSWORD}
+

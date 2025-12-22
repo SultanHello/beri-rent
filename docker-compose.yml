@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin123@gmail.com
+      KEYCLOAK_ADMIN_PASSWORD: sbu&bwln8
+      KC_DB: postgres
+      KC_DB_URL_HOST: db
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: Zxcvbnm
+      KC_DB_PORT: 5432
+      KC_DB_DATABASE: keycloak
+    command:
+      - start-dev
+    ports:
+      - "8000:8080"
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Zxcvbnm
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Добавить
+    ports:
+      - "5432:5432"  # Открыть порт для localhost
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
