@@ -2,7 +2,7 @@ package sultan.org.userservice.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sultan.org.userservice.user.model.entity.Location;
+import sultan.org.userservice.userprofile.model.entity.Location;
 
 
 

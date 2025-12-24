@@ -1,8 +1,8 @@
-package sultan.org.userservice.user.repository;
+package sultan.org.userservice.userprofile.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sultan.org.userservice.user.model.entity.UserProfile;
+import sultan.org.userservice.userprofile.model.entity.UserProfile;
 
 
 @Repository

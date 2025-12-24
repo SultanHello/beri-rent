@@ -2,6 +2,8 @@ package sultan.org.userservice.user.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sultan.org.userservice.ratingsummary.model.entity.RatingSummary;
+import sultan.org.userservice.userprofile.model.entity.UserProfile;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

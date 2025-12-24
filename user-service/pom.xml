@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0</version>
+		<version>3.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>sultan.org</groupId>
@@ -43,8 +43,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -80,21 +83,8 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webflux</artifactId>
@@ -118,10 +108,15 @@
 			<version>17.0.0</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

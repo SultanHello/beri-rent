@@ -2,33 +2,58 @@ package sultan.org.userservice.user.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import sultan.org.userservice.common.util.JwtUtil;
+import sultan.org.userservice.user.exceptions.UserAlreadyExistsException;
 import sultan.org.userservice.user.model.dto.UserDto;
+import sultan.org.userservice.user.exceptions.UserNotFoundException;
 import sultan.org.userservice.user.model.entity.User;
 import sultan.org.userservice.user.repository.UserRepository;
 import sultan.org.userservice.user.service.UserService;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
 
 
     @Override
     public UserDto save(User user) {
-        User user1  = userRepository.save(user);
-        return buildUser(user1);
+        try {
+            User savedUser = userRepository.save(user);
+            return UserDto.fromEntity(savedUser);
+        }catch (DataIntegrityViolationException e){
+            if(userRepository.existsByEmail(user.getEmail())){
+                throw new UserAlreadyExistsException("Email taken");
+            }
+            throw e;
+        }
+
     }
 
-    private static UserDto buildUser(User user1) {
-        return UserDto.builder()
-                .email(user1.getEmail())
-                .createdAt(user1.getCreatedAt())
-                .keycloakId(user1.getKeycloakId())
-                .createdAt(user1.getCreatedAt())
-                .updateAt(user1.getUpdatedAt())
-                .username(user1.getUsername())
-                .build();
+    @Override
+    public User findUserByKeycloakId(UUID keyCloakId) {
+        return userRepository.findByKeycloakId(keyCloakId).orElseThrow(()->new UserNotFoundException(
+                "User not found with keycloakId: " + keyCloakId
+        ));
+
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException("user not found"));
+    }
+
+    @Override
+    public User me(String token) {
+        UUID keycloakId = jwtUtil.extractSubject(token);
+        User user = this.findUserByKeycloakId(keycloakId);
+        return user;
     }
 }

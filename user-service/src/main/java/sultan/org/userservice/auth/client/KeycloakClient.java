@@ -2,10 +2,9 @@ package sultan.org.userservice.auth.client;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -94,6 +93,8 @@ public class KeycloakClient {
         // Логин, чтобы сразу получить jwt tokens
         return loginUser(new LoginRequestDto(dto.getEmail(), dto.getPassword()));
     }
+
+
 
     public JwtAuthenticationResponseDto loginUser(LoginRequestDto loginRequestDto) {
         return keycloakWebClient.post()

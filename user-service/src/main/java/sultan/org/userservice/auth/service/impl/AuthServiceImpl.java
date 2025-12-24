@@ -19,16 +19,16 @@ import java.util.UUID;
 public class AuthServiceImpl implements AuthService {
     private final KeycloakClient keycloakClient;
     private final UserRegistrationAsyncProcessor asyncProcessor;
+    private final JwtUtil jwtUtil;
 
     @Override
     public JwtAuthenticationResponseDto loginUser(LoginRequestDto loginRequestDto) {
         return keycloakClient.loginUser(loginRequestDto);
     }
-
     @Override
     public JwtAuthenticationResponseDto createUser(RegistrationRequestDto dto) {
         JwtAuthenticationResponseDto  jwt=keycloakClient.createUser(dto);
-        UUID keyCloakUserUd = JwtUtil.extractSubject(jwt.getAccessToken());
+        UUID keyCloakUserUd = jwtUtil.extractSubject(jwt.getAccessToken());
         asyncProcessor.saveUserAsync(dto,keyCloakUserUd);
         return jwt;
     }

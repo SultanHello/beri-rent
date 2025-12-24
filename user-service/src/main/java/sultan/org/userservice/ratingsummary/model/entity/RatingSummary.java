@@ -1,14 +1,18 @@
-package sultan.org.userservice.user.model.entity;
+package sultan.org.userservice.ratingsummary.model.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import sultan.org.userservice.user.model.entity.User;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "ratings_summary")
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RatingSummary {
 
     @Id

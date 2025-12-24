@@ -1,8 +1,9 @@
-package sultan.org.userservice.user.model.entity;
+package sultan.org.userservice.userprofile.model.entity;
 
 
 import jakarta.persistence.*;
 import lombok.*;
+import sultan.org.userservice.userprofile.model.entity.UserProfile;
 
 @Table(name = "location")
 @Entity
