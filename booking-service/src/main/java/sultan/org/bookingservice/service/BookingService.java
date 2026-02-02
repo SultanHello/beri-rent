@@ -10,4 +10,5 @@ import java.util.UUID;
 @Service
 public interface BookingService {
     List<Booking> getMyBookings(UUID renterUUID);
+    Booking getBooking(Long bookingId);
 }

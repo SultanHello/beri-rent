@@ -23,5 +23,9 @@ public class BookingController {
     public List<Booking> getMyBookings(@AuthenticationPrincipal Jwt jwt){
         return bookingService.getMyBookings( UUID.fromString(jwt.getSubject()));
     }
+    @GetMapping("/{bookingId}")
+    public Booking getBooking(Long bookingId){
+        return bookingService.getBooking(bookingId);
+    }
 
 }
