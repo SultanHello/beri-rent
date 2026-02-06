@@ -50,10 +50,7 @@ public class PaymentController {
         return paymentService.createIntent(paymentId);
     }
 
-    @PostMapping("/confirm")
-    public void confirm(@RequestParam Long paymentId) {
-        paymentService.confirmPayment(paymentId);
-    }
+
 
     @PostMapping("/refund/{paymentId}")
     public void refund(@PathVariable Long paymentId) {
