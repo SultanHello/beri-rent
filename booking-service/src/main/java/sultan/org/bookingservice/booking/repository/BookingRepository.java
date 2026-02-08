@@ -24,6 +24,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             UUID renterId,
             LocalDateTime dateTime
     );
+    List<Booking> findByRenterIdAndBookingStatus(UUID renterId,Status status);
+
 
 
     List<Booking> findByRenterIdAndStartDateAfter(

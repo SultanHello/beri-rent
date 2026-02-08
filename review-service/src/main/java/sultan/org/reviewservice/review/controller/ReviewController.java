@@ -1,9 +1,17 @@
 package sultan.org.reviewservice.review.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+import sultan.org.reviewservice.review.model.dto.CreateReviewRequest;
+import sultan.org.reviewservice.review.model.dto.UpdateReviewRequest;
 import sultan.org.reviewservice.review.model.entity.Review;
+import sultan.org.reviewservice.review.repository.ReviewRepository;
+import sultan.org.reviewservice.review.service.ReviewService;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/reviews")

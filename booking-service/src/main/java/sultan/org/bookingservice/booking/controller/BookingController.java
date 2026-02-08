@@ -20,6 +20,14 @@ import java.util.UUID;
 public class BookingController {
 
     private final BookingService bookingService;
+    @GetMapping("/pending-review")
+    public List<Booking> pendingReviews(
+            @AuthenticationPrincipal Jwt jwt
+    ) {
+        return bookingService.getPendingReviews(
+                UUID.fromString(jwt.getSubject())
+        );
+    }
 
     /* ================= CREATE / UPDATE / DELETE ================= */
 

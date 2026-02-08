@@ -40,4 +40,5 @@ public interface BookingService {
     /* INTERNAL */
     Booking getInternalBooking(Long bookingId);
     void updateStatusFromPayment(Long bookingId, Status status);
+    public List<Booking> getPendingReviews(UUID renterId);
 }

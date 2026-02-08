@@ -3,6 +3,7 @@ package sultan.org.bookingservice.booking.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import sultan.org.bookingservice.booking.client.ReviewClient;
 import sultan.org.bookingservice.booking.enums.Status;
 import sultan.org.bookingservice.booking.exceptions.BookingNotFoundException;
 import sultan.org.bookingservice.booking.model.dto.AvailabilityRequest;
@@ -22,6 +23,25 @@ import java.util.UUID;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final ReviewClient reviewClient;
+
+    public List<Booking> getPendingReviews(UUID renterId) {
+
+        List<Booking> completedBookings =
+                bookingRepository.findByRenterIdAndBookingStatus(
+                        renterId,
+                        Status.COMPLETED
+                );
+
+        return completedBookings.stream()
+                .filter(booking ->
+                        !reviewClient.existsReview(
+                                booking.getId(),
+                                renterId
+                        )
+                )
+                .toList();
+    }
 
     /* ================= CREATE ================= */
 
@@ -195,4 +215,5 @@ public class BookingServiceImpl implements BookingService {
         booking.setUpdatedAt(LocalDateTime.now());
         bookingRepository.save(booking);
     }
+
 }
