@@ -13,4 +13,5 @@ public interface MessageService {
     List<Message> getMessages(Long conversationId);
 
     void delete(Long messageId, UUID userId) throws AccessDeniedException;
+    void saveMessage(Long conversationId, UUID senderId, String content);
 }
