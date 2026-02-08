@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for payment-service" enabled="true">
+      <profile name="Annotation profile for user-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -17,7 +17,7 @@
         <module name="user-service" />
         <module name="payment-service" />
       </profile>
-      <profile name="Annotation profile for messaging-service" enabled="true">
+      <profile name="Annotation profile for review-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -26,6 +26,7 @@
         </processorPath>
         <module name="item-service" />
         <module name="messaging-service" />
+        <module name="review-service" />
         <module name="booking-service" />
       </profile>
     </annotationProcessing>
@@ -36,6 +37,7 @@
       <module name="item-service" options="-parameters" />
       <module name="messaging-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
+      <module name="review-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>
