@@ -21,6 +21,7 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final ReviewRepository reviewRepository;
 
+
     @GetMapping("/user/{userId}")
     public List<Review> byUser(@PathVariable UUID userId) {
         return reviewRepository.findByTargetUserId(userId);
