@@ -88,6 +88,7 @@ public class BookingController {
      ================= AS OWNER =================
      */
 
+
     @GetMapping("/as-owner")
     public List<Booking> getAsOwner(@AuthenticationPrincipal Jwt jwt) {
         return bookingService.getBookingsAsOwner(
