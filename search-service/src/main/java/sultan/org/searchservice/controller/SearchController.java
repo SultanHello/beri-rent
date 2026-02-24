@@ -1,10 +1,16 @@
+package sultan.org.searchservice.controller;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sultan.org.searchservice.document.ItemDocument;
+import sultan.org.searchservice.service.SearchService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/search")
