@@ -1,9 +1,9 @@
 package sultan.org.searchservice.service;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+
 import co.elastic.clients.json.JsonData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,49 +35,73 @@ public class SearchService {
             Double lat,
             Double lng,
             Double radius,
-            String sortBy,
             int page,
             int size
     ) {
 
-        BoolQuery.Builder boolQuery = QueryBuilders.bool();
+        NativeQueryBuilder queryBuilder = new NativeQueryBuilder();
 
-        if (q != null) {
-            boolQuery.must(QueryBuilders
-                    .multiMatch(m -> m
-                            .query(q)
-                            .fields("title", "description")
-                    ));
-        }
+        queryBuilder.withQuery(qb -> qb.bool(b -> {
 
-        if (category != null) {
-            boolQuery.filter(QueryBuilders.term(t -> t.field("category").value(category)));
-        }
+            // 🔎 Full text search
+            if (q != null && !q.isBlank()) {
+                b.must(m -> m.multiMatch(mm -> mm
+                        .query(q)
+                        .fields("title", "description")
+                ));
+            }
 
-        if (city != null) {
-            boolQuery.filter(QueryBuilders.term(t -> t.field("city").value(city)));
-        }
+            // 📂 Category filter
+            if (category != null) {
+                b.filter(f -> f.term(t -> t
+                        .field("category")
+                        .value(category)
+                ));
+            }
 
-        if (minPrice != null || maxPrice != null) {
-            boolQuery.filter(QueryBuilders.range(r -> r
-                    .field("price")
-                    .gte(minPrice != null ? JsonData.of(minPrice) : null)
-                    .lte(maxPrice != null ? JsonData.of(maxPrice) : null)
-            ));
-        }
+            // 🏙 City filter
+            if (city != null) {
+                b.filter(f -> f.term(t -> t
+                        .field("city")
+                        .value(city)
+                ));
+            }
 
-        if (lat != null && lng != null && radius != null) {
-            boolQuery.filter(QueryBuilders.geoDistance(g -> g
-                    .field("location")
-                    .location(l -> l.latlon(ll -> ll.lat(lat).lon(lng)))
-                    .distance(radius + "km")
-            ));
-        }
+            // 💰 Price range
+            if (minPrice != null || maxPrice != null) {
+                b.filter(f -> f.range(r -> {
+                    r.field("price");
 
-        NativeQuery query = new NativeQueryBuilder()
-                .withQuery(boolQuery.build()._toQuery())
-                .withPageable(PageRequest.of(page, size))
-                .build();
+                    if (minPrice != null) {
+                        r.gte(JsonData.of(minPrice));
+                    }
+
+                    if (maxPrice != null) {
+                        r.lte(JsonData.of(maxPrice));
+                    }
+
+                    return r;
+                }));
+            }
+
+            // 🌍 Geo distance
+            if (lat != null && lng != null && radius != null) {
+                b.filter(f -> f.geoDistance(g -> g
+                        .field("location")
+                        .location(l -> l.latlon(ll -> ll
+                                .lat(lat)
+                                .lon(lng)
+                        ))
+                        .distance(radius.intValue() + "km")
+                ));
+            }
+
+            return b;
+        }));
+
+        queryBuilder.withPageable(PageRequest.of(page, size));
+
+        NativeQuery query = queryBuilder.build();
 
         SearchHits<ItemDocument> hits =
                 elasticsearchOperations.search(query, ItemDocument.class);
@@ -146,6 +170,9 @@ public class SearchService {
         SearchHits<ItemDocument> hits =
                 elasticsearchOperations.search(query, ItemDocument.class);
 
-        return hits.getAggregations().asMap();
+        return hits.getAggregations() != null
+                ? (Map<String, Object>) hits.getAggregations().aggregations()
+                : Map.of();
+        return Map.of();
     }
 }
