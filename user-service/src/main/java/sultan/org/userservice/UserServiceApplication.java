@@ -5,10 +5,12 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.tomcat.util.descriptor.web.ContextHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import sultan.org.userservice.common.util.EnvCheck;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
