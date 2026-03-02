@@ -2,9 +2,6 @@ package sultan.org.searchservice.service;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-
-import co.elastic.clients.json.JsonData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +13,7 @@ import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
 import sultan.org.searchservice.document.ItemDocument;
+
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +33,7 @@ public class SearchService {
             Double lat,
             Double lng,
             Double radius,
+            String sortBy,
             int page,
             int size
     ) {
@@ -142,5 +141,15 @@ public class SearchService {
         return hits.getAggregations() != null
                 ? (Map<String, Object>) hits.getAggregations().aggregations()
                 : Map.of();
+    }
+
+    public List<String> autocomplete(String text){
+        return null;
+
+
+    }
+
+    public Page<ItemDocument> nearby(Double lat, Double lng, Double radius, int page, int size) {
+        return null;
     }
 }
