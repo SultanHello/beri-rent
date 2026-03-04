@@ -121,7 +121,8 @@ management:
   endpoint:
     gateway:
       enabled: true
-
+jwt:
+  secret: mySuperSecretKey123456
 # Logging
 logging:
   level:
