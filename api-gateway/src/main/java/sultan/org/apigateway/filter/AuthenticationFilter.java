@@ -34,7 +34,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
             }
 
             // Проверяем наличие токена
-            if (!request.getHeaders().containsHeader("Authorization")) {
+            if (!request.getHeaders().containsKey("Authorization")) {
                 return onError(exchange, "Missing authorization header", HttpStatus.UNAUTHORIZED);
             }
 
