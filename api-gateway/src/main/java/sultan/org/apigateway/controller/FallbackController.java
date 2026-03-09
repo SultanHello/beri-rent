@@ -10,7 +10,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/fallback")
 public class FallbackController {
-
     @GetMapping("/user-service")
     public Mono<Map<String, String>> userServiceFallback() {
         return Mono.just(Map.of(
@@ -18,7 +17,6 @@ public class FallbackController {
             "message", "Please try again later"
         ));
     }
-
     @GetMapping("/item-service")
     public Mono<Map<String, String>> itemServiceFallback() {
         return Mono.just(Map.of(
