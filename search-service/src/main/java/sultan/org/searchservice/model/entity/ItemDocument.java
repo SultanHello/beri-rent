@@ -1,4 +1,4 @@
-package sultan.org.searchservice.document;
+package sultan.org.searchservice.model.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

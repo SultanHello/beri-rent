@@ -2,6 +2,7 @@ package sultan.org.searchservice.service;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 
+import co.elastic.clients.json.JsonData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,7 +13,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
-import sultan.org.searchservice.document.ItemDocument;
+import sultan.org.searchservice.model.entity.ItemDocument;
 
 
 import java.util.List;
@@ -67,21 +68,19 @@ public class SearchService {
 
                     // 💰 Price range (NEW API)
                     if (minPrice != null || maxPrice != null) {
-                        b.filter(f -> f.range(r -> r
-                                .number(n -> {
-                                    n.field("price");
+                        b.filter(f -> f.range(r -> {
+                            r.field("price");
 
-                                    if (minPrice != null) {
-                                        n.gte(minPrice);
-                                    }
+                            if (minPrice != null) {
+                                r.gte(JsonData.of(minPrice));
+                            }
 
-                                    if (maxPrice != null) {
-                                        n.lte(maxPrice);
-                                    }
+                            if (maxPrice != null) {
+                                r.lte(JsonData.of(maxPrice));
+                            }
 
-                                    return n;
-                                })
-                        ));
+                            return r;
+                        }));
                     }
 
                     // 🌍 Geo distance

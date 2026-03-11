@@ -1,8 +1,12 @@
 spring:
   application:
     name: search-service
+  elasticsearch:
+    uris: http://localhost:9200
 server:
   port: 8088
+
+
 
 eureka:
   client:
