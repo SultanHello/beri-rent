@@ -26,6 +26,11 @@
 			<artifactId>spring-boot-starter-web</artifactId> <!-- ✅ fixed: was spring-boot-starter-webmvc -->
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
 		<!-- Data -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,11 +76,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> <!-- ✅ deduped -->
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-openfeign-core</artifactId>
-			<version>4.2.0</version>
-		</dependency>
+
 
 		<!-- Observability -->
 		<dependency>
