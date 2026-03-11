@@ -27,7 +27,7 @@ public class Notification {
 
     private String type;
 
-    private boolean isRead;
+    private boolean read;
 
     private LocalDateTime createdAt;
 }
