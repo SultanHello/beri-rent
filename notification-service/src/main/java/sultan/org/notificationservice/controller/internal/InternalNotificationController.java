@@ -12,7 +12,6 @@ public class InternalNotificationController {
 
     private final NotificationService notificationService;
 
-    // POST /internal/notifications/send
     @PostMapping("/send")
     public Notification send(@RequestBody Notification notification) {
         return notificationService.send(notification);

@@ -14,7 +14,6 @@ public class NotificationPreferences {
 
     @Id
     private Long userId;
-
     private boolean emailEnabled;
     private boolean pushEnabled;
     private boolean inAppEnabled;

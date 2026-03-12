@@ -11,21 +11,16 @@ import java.util.List;
 @RequestMapping("/api/notifications")
 @RequiredArgsConstructor
 public class NotificationController {
-
     private final NotificationService notificationService;
-
-
     @GetMapping
     public List<Notification> getAll(@RequestParam Long userId) {
         return notificationService.getAll(userId);
     }
 
-
     @GetMapping("/unread")
     public List<Notification> getUnread(@RequestParam Long userId) {
         return notificationService.getUnread(userId);
     }
-
 
     @PostMapping("/{id}/mark-read")
     public void markRead(@PathVariable Long id) {
