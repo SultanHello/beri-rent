@@ -10,7 +10,7 @@ import sultan.org.userservice.userprofile.model.entity.UserProfile;
 import sultan.org.userservice.userprofile.service.UserProfileService;
 
 @RestController
-@RequestMapping("/user-profile")
+@RequestMapping("/users/user-profile")
 @RequiredArgsConstructor
 public class UserProfileController {
     private final UserProfileService userProfileService;

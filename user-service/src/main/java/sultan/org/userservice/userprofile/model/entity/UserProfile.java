@@ -19,18 +19,22 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
     private String firstName;
     private String lastName;
     private String avatarUrl;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
     private String aboutMe;
-    @OneToOne(mappedBy = "userProfile",fetch = FetchType.LAZY)
-    private Location location;
+
+    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Location location;  // теперь cascade есть
+
     private LocalDateTime updatedAt;
-
-
 }
