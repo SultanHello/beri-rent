@@ -1,19 +1,20 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${REALM_URL}
   application:
     name: api-gateway
   cloud:
     gateway:
-      # ?????????????? ???????? routes ?? Eureka
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-
-      # ?????? routes (????? ?????? ???????)
       routes:
-        # USER SERVICE
         - id: user-service
-          uri: lb://user-service  # lb = load balancer ????? Eureka
+          uri: lb://user-service
           predicates:
             - Path=/api/users/**, /api/auth/**
           filters:
@@ -23,7 +24,6 @@ spring:
                 name: userServiceCircuitBreaker
                 fallbackUri: forward:/fallback/user-service
 
-        # ITEM SERVICE
         - id: item-service
           uri: lb://item-service
           predicates:
@@ -35,7 +35,6 @@ spring:
                 name: itemServiceCircuitBreaker
                 fallbackUri: forward:/fallback/item-service
 
-        # BOOKING SERVICE
         - id: booking-service
           uri: lb://booking-service
           predicates:
@@ -43,7 +42,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
-        # PAYMENT SERVICE
         - id: payment-service
           uri: lb://payment-service
           predicates:
@@ -51,7 +49,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
-        # MESSAGING SERVICE
         - id: messaging-service
           uri: lb://messaging-service
           predicates:
@@ -59,7 +56,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
-        # REVIEW SERVICE
         - id: review-service
           uri: lb://review-service
           predicates:
@@ -67,7 +63,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
-        # SEARCH SERVICE
         - id: search-service
           uri: lb://search-service
           predicates:
@@ -75,7 +70,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
-        # NOTIFICATION SERVICE
         - id: notification-service
           uri: lb://notification-service
           predicates:
@@ -83,7 +77,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
-      # Global CORS configuration
       globalcors:
         cors-configurations:
           '[/**]':
@@ -101,7 +94,6 @@ spring:
             allow-credentials: true
             max-age: 3600
 
-# Eureka Client Configuration
 eureka:
   client:
     service-url:
@@ -112,7 +104,6 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${random.value}
 
-# Actuator
 management:
   endpoints:
     web:
@@ -121,9 +112,7 @@ management:
   endpoint:
     gateway:
       enabled: true
-jwt:
-  secret: mySuperSecretKey123456
-# Logging
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
