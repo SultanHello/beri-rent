@@ -13,16 +13,31 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: user-service
+        # USER SERVICE - auth (публичные)
+        - id: user-service-auth
           uri: lb://user-service
           predicates:
-            - Path=/api/users/**, /api/auth/**
+            - Path=/api/auth/**
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
             - name: CircuitBreaker
               args:
                 name: userServiceCircuitBreaker
                 fallbackUri: forward:/fallback/user-service
+
+        # USER SERVICE - users (защищённые)
+        - id: user-service-users
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+            - name: CircuitBreaker
+              args:
+                name: userServiceCircuitBreaker
+                fallbackUri: forward:/fallback/user-service
+
+
 
         - id: item-service
           uri: lb://item-service

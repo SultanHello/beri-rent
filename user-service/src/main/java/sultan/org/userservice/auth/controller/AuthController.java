@@ -18,7 +18,7 @@ import sultan.org.userservice.auth.service.AuthService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @Slf4j
 public class AuthController {
     private final AuthService authService;
