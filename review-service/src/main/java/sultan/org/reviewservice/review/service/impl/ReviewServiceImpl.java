@@ -1,6 +1,7 @@
 package sultan.org.reviewservice.review.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import sultan.org.reviewservice.review.client.BookingClient;
@@ -20,6 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final BookingClient bookingClient;
+    private final KafkaTemplate<String, RatingEvent> kafkaTemplate;
 
     public Review create(CreateReviewRequest request, UUID authorId) {
 
