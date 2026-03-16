@@ -11,5 +11,5 @@ public interface UserProfileService {
 
     UserProfileResponseDto getMyProfile(String token);
 
-    UserProfileResponseDto getProfileById(Long id);
+    UserProfileResponseDto getProfileByUserId(Long id);
 }

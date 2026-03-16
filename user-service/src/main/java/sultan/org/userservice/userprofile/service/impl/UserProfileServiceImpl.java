@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import sultan.org.userservice.common.util.JwtUtil;
+import sultan.org.userservice.user.exceptions.UserNotFoundException;
 import sultan.org.userservice.user.model.entity.User;
 import sultan.org.userservice.user.repository.UserRepository;
 import sultan.org.userservice.user.service.UserService;
@@ -44,9 +45,8 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfileResponseDto getProfileById(Long id) {
-        UserProfile userProfile = userProfileRepository.findById(id).orElseThrow(
-                ()->new UserProfileNotFoundException("user profile not exist with this id"));
+    public UserProfileResponseDto getProfileByUserId(Long id) {
+        UserProfile userProfile = userProfileRepository.findUserProfileByUser(userService.findUserById(id)).orElseThrow(()->new  UserNotFoundException("user profile not exist with this user id"));
         return UserProfileResponseDto.fromEntity(userProfile);
     }
 
