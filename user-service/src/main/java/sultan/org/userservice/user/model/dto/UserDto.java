@@ -12,6 +12,7 @@ import java.util.UUID;
 @Builder
 @Data
 public class UserDto {
+    private Long id;
     private UUID keycloakId;
     private String email;
     private String password;
@@ -22,6 +23,7 @@ public class UserDto {
 
     public static UserDto fromEntity(User user){
         return UserDto.builder()
+                .id(user.getId())
 
                 .email(user.getEmail())
                 .createdAt(user.getCreatedAt())

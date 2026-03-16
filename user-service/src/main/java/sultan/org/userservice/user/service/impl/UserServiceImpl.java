@@ -13,6 +13,7 @@ import sultan.org.userservice.user.model.entity.User;
 import sultan.org.userservice.user.repository.UserRepository;
 import sultan.org.userservice.user.service.UserService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -55,5 +56,14 @@ public class UserServiceImpl implements UserService {
         UUID keycloakId = jwtUtil.extractSubject(token);
         User user = this.findUserByKeycloakId(keycloakId);
         return user;
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return this.convertToDtoList(userRepository.findAll());
+    }
+    private List<UserDto> convertToDtoList(List<User> users){
+        return users.stream().map(UserDto::fromEntity).toList();
+
     }
 }

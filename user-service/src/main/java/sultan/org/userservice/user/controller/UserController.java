@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import sultan.org.userservice.user.model.dto.UserDto;
 import sultan.org.userservice.user.service.UserService;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/users")
@@ -25,6 +27,11 @@ public class UserController {
     @GetMapping("/user-id/{id}")
     public UserDto findUser(@PathVariable Long id){
         return UserDto.fromEntity(userService.findUserById(id));
+    }
+
+    @GetMapping()
+    public List<UserDto> users(){
+        return userService.getAllUsers();
     }
 
 

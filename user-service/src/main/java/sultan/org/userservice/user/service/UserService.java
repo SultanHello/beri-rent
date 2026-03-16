@@ -6,6 +6,7 @@ import sultan.org.userservice.ratingsummary.model.entity.RatingSummary;
 import sultan.org.userservice.user.model.dto.UserDto;
 import sultan.org.userservice.user.model.entity.User;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
@@ -16,4 +17,6 @@ public interface UserService {
     User findUserById(Long id);
 
     User me(String token);
+
+    List<UserDto> getAllUsers();
 }
