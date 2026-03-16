@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import sultan.org.reviewservice.review.client.BookingClient;
+import sultan.org.reviewservice.review.kafka.RatingEvent;
 import sultan.org.reviewservice.review.model.dto.BookingInternalResponse;
 import sultan.org.reviewservice.review.model.dto.CreateReviewRequest;
 import sultan.org.reviewservice.review.model.entity.Review;
@@ -48,7 +49,14 @@ public class ReviewServiceImpl implements ReviewService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        return reviewRepository.save(review);
+        Review saved = reviewRepository.save(review);
+
+        kafkaTemplate.send("review-created", RatingEvent.builder()
+                .targetUserId(request.getTargetUserId())
+                .rating(request.getRating())
+                .build());
+
+        return saved; // один return
     }
 
     public void respond(Long reviewId, UUID ownerId, String response) {

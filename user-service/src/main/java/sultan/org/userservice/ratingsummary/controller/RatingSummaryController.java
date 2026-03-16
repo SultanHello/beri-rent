@@ -15,7 +15,7 @@ import sultan.org.userservice.user.service.UserService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/rating-summaries")
+@RequestMapping("/api/users/rating-summaries")
 @RequiredArgsConstructor
 public class RatingSummaryController {
 
@@ -23,10 +23,12 @@ public class RatingSummaryController {
     @GetMapping("/my")
     public RatingSummaryResponseDto getMyRatingSummary(@RequestHeader("Authorization") String token){
         return ratingSummaryService.getMyRatingSummary(token);
+
     }
-    @GetMapping("/user-id/{id}")
-    public RatingSummaryResponseDto getUserRatingSummary(@PathVariable Long id){
-        return ratingSummaryService.getUserRatingSummaryById(id);
+    @GetMapping("/user/{keycloakId}")
+    public RatingSummaryResponseDto getUserRatingSummary(@PathVariable UUID keycloakId) {
+        return ratingSummaryService.getUserRatingSummaryById(keycloakId);
     }
+
 
 }
