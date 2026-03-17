@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review review = Review.builder()
                 .bookingId(request.getBookingId())
-                .itemId(request.getItemId())
+                .itemId(booking.getItemId())
                 .authorId(authorId)
                 .targetUserId(request.getTargetUserId())
                 .rating(request.getRating())
