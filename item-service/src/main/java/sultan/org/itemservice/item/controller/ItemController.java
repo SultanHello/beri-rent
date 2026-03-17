@@ -11,7 +11,7 @@ import sultan.org.itemservice.item.service.ItemService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
