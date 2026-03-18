@@ -22,7 +22,6 @@ public class ItemDto {
     private int price_per_day;
     private LocalDateTime createdAt;
     private ItemStatus itemStatus;
-
     public static ItemDto fromEntity(Item item){
         return ItemDto.builder()
                 .id(item.getId())
