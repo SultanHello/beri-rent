@@ -10,17 +10,6 @@
         <module name="api-gateway" />
         <module name="eureka-service" />
       </profile>
-      <profile name="Annotation profile for messaging-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
-        </processorPath>
-        <module name="item-service" />
-        <module name="messaging-service" />
-        <module name="booking-service" />
-      </profile>
       <profile name="Annotation profile for review-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -33,6 +22,17 @@
         <module name="review-service" />
         <module name="search-service" />
         <module name="notification-service" />
+      </profile>
+      <profile name="Annotation profile for item-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
+        </processorPath>
+        <module name="item-service" />
+        <module name="messaging-service" />
+        <module name="booking-service" />
       </profile>
     </annotationProcessing>
   </component>
