@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sultan.org.itemservice.item.enums.ItemStatus;
 import sultan.org.itemservice.item.model.entity.Item;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class ItemDto {
     private String description;
     private int price_per_day;
     private LocalDateTime createdAt;
+    private ItemStatus itemStatus;
 
     public static ItemDto fromEntity(Item item){
         return ItemDto.builder()
@@ -28,6 +30,8 @@ public class ItemDto {
                 .title(item.getTitle())
                 .description(item.getDescription())
                 .price_per_day(item.getPrice_per_day())
-                .createdAt(item.getCreatedAt()).build();
+                .createdAt(item.getCreatedAt())
+                .itemStatus(item.getItemStatus())
+                .build();
     }
 }
