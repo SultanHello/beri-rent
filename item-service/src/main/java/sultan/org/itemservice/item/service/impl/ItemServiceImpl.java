@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import sultan.org.itemservice.item.enums.ItemStatus;
 import sultan.org.itemservice.item.exceptions.ItemNotFoundException;
 import sultan.org.itemservice.item.exceptions.NotOwnerException;
+import sultan.org.itemservice.item.model.dto.ItemDto;
 import sultan.org.itemservice.item.model.dto.ItemRequestDto;
 import sultan.org.itemservice.item.model.entity.Item;
 import sultan.org.itemservice.item.repository.ItemRepository;
 import sultan.org.itemservice.item.service.ItemService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,6 +37,11 @@ public class ItemServiceImpl implements ItemService {
         }
 
 
+    }
+
+    @Override
+    public List<ItemDto> getAllItems() {
+        return itemRepository.findAll().stream().map(ItemDto::fromEntity).toList();
     }
 
     private static Item getBuildItemFromDto(ItemRequestDto itemRequestDto) {
