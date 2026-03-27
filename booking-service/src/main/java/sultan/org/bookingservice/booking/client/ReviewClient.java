@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @FeignClient(name = "review-service")
-@Service
 public interface ReviewClient {
 
     @GetMapping("/internal/reviews/exists")

@@ -7,7 +7,7 @@ import sultan.org.bookingservice.booking.model.dto.ItemDto;
 
 import java.util.UUID;
 
-@FeignClient(name = "item-service", path = "/api/items")
+@FeignClient(name = "item-service", path = "/items")
 public interface ItemClient {
     @GetMapping("/{id}")
     UUID getItemById(@PathVariable("id") Long id);

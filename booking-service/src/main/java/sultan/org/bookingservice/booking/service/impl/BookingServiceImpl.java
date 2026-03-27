@@ -9,7 +9,7 @@ import sultan.org.bookingservice.booking.enums.Status;
 import sultan.org.bookingservice.booking.exceptions.BookingNotFoundException;
 import sultan.org.bookingservice.booking.model.dto.AvailabilityRequest;
 import sultan.org.bookingservice.booking.model.dto.CreateBookingRequest;
-import sultan.org.bookingservice.booking.model.dto.ItemDto;
+
 import sultan.org.bookingservice.booking.model.dto.UpdateBookingRequest;
 import sultan.org.bookingservice.booking.model.entity.Booking;
 import sultan.org.bookingservice.booking.repository.BookingRepository;
@@ -50,10 +50,15 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking createBooking(CreateBookingRequest request, UUID renterId) {
+        UUID ownerId = getOwnerId(request.getItemId());
+        if(renterId.equals(ownerId)){
+            throw new RuntimeException("owner cannot rent own item");
+        };
+
         Booking booking = Booking.builder()
                 .itemId(request.getItemId())
                 .renterId(renterId)
-                .ownerId(getOwnerId(request.getItemId()))
+                .ownerId(ownerId)
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .bookingStatus(Status.PENDING)
