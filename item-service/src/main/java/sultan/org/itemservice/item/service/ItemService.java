@@ -17,4 +17,6 @@ public interface ItemService {
     void publish(Long itemId, Jwt ownerId) throws NotOwnerException;
 
     List<ItemDto> getAllItems();
+
+    UUID getOwnerIdByItemId();
 }

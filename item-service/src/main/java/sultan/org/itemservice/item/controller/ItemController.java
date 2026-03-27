@@ -34,4 +34,8 @@ public class ItemController {
         return itemService.getAllItems();
 
     }
+    @GetMapping("/{itemId}")
+    public UUID getOwnerIdByItemId(@PathVariable Long itemId){
+        return itemService.getOwnerIdByItemId(itemId);
+    }
 }

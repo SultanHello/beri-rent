@@ -3,11 +3,13 @@ package sultan.org.bookingservice.booking.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import sultan.org.bookingservice.booking.client.ItemClient;
 import sultan.org.bookingservice.booking.client.ReviewClient;
 import sultan.org.bookingservice.booking.enums.Status;
 import sultan.org.bookingservice.booking.exceptions.BookingNotFoundException;
 import sultan.org.bookingservice.booking.model.dto.AvailabilityRequest;
 import sultan.org.bookingservice.booking.model.dto.CreateBookingRequest;
+import sultan.org.bookingservice.booking.model.dto.ItemDto;
 import sultan.org.bookingservice.booking.model.dto.UpdateBookingRequest;
 import sultan.org.bookingservice.booking.model.entity.Booking;
 import sultan.org.bookingservice.booking.repository.BookingRepository;
@@ -24,6 +26,7 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final ReviewClient reviewClient;
+    private final ItemClient itemClient;
 
     public List<Booking> getPendingReviews(UUID renterId) {
 
@@ -50,6 +53,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = Booking.builder()
                 .itemId(request.getItemId())
                 .renterId(renterId)
+                .ownerId(getItemOwner(request.getItemId()).getOwnerId())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .bookingStatus(Status.PENDING)
@@ -57,6 +61,9 @@ public class BookingServiceImpl implements BookingService {
                 .build();
 
         return bookingRepository.save(booking);
+    }
+    private ItemDto getItemOwner(Long itemId){
+        return itemClient.getItemById(itemId);
     }
 
     /* ================= UPDATE ================= */

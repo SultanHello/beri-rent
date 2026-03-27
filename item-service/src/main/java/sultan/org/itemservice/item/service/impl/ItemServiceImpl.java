@@ -44,6 +44,11 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAll().stream().map(ItemDto::fromEntity).toList();
     }
 
+    @Override
+    public UUID getOwnerIdByItemId() {
+        return ;
+    }
+
     private static Item getBuildItemFromDto(ItemRequestDto itemRequestDto) {
         return Item.builder()
                 .id(itemRequestDto.getId())
