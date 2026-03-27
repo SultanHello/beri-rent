@@ -45,8 +45,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public UUID getOwnerIdByItemId() {
-        return ;
+    public UUID getOwnerIdByItemId(Long itemId) {
+        return itemRepository.findById(itemId).map(Item::getOwnerId).orElseThrow(()->new ItemNotFoundException("item not found"));
     }
 
     private static Item getBuildItemFromDto(ItemRequestDto itemRequestDto) {

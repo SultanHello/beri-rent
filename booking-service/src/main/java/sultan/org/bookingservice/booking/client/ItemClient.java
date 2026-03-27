@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import sultan.org.bookingservice.booking.model.dto.ItemDto;
 
+import java.util.UUID;
+
 @FeignClient(name = "item-service", path = "/api/items")
 public interface ItemClient {
     @GetMapping("/{id}")
-    ItemDto getItemById(@PathVariable("id") Long id);
+    UUID getItemById(@PathVariable("id") Long id);
 }

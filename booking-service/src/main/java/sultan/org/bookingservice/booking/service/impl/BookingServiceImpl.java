@@ -53,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = Booking.builder()
                 .itemId(request.getItemId())
                 .renterId(renterId)
-                .ownerId(getItemOwner(request.getItemId()).getOwnerId())
+                .ownerId(getOwnerId(request.getItemId()))
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .bookingStatus(Status.PENDING)
@@ -62,7 +62,7 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingRepository.save(booking);
     }
-    private ItemDto getItemOwner(Long itemId){
+    private UUID getOwnerId(Long itemId){
         return itemClient.getItemById(itemId);
     }
 
