@@ -15,7 +15,7 @@ import sultan.org.userservice.user.service.UserService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users/rating-summaries")
+@RequestMapping("/users/rating-summaries")
 @RequiredArgsConstructor
 public class RatingSummaryController {
 
