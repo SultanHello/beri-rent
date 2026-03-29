@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     }
     @Override
     public JwtAuthenticationResponseDto createUser(RegistrationRequestDto dto) {
-        JwtAuthenticationResponseDto  jwt=keycloakClient.createUser(dto);
+        JwtAuthenticationResponseDto jwt=keycloakClient.createUser(dto);
         UUID keyCloakUserUd = jwtUtil.extractSubject(jwt.getAccessToken());
         asyncProcessor.saveUserAsync(dto,keyCloakUserUd);
         return jwt;

@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sultan.org.userservice.auth.dto.request.RegistrationRequestDto;
+import sultan.org.userservice.ratingsummary.model.entity.RatingSummary;
 import sultan.org.userservice.user.model.entity.User;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class UserRegistrationAsyncProcessor {
                 .updatedAt(LocalDateTime.now())
                 .username(dto.getUsername())
                 .keycloakId(keycloakId)
+                .ratingSummary(new RatingSummary())
                 .build();
         userService.save(user);
     }
