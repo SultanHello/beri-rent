@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByKeycloakId(UUID keyCloakId) {
+        System.out.println(userRepository.findAll().stream().map(a->a.getKeycloakId()).toList());
         return userRepository.findByKeycloakId(keyCloakId).orElseThrow(()->new UserNotFoundException(
                 "User not found with keycloakId: " + keyCloakId
         ));

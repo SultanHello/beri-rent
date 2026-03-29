@@ -9,6 +9,7 @@ import sultan.org.userservice.auth.dto.request.RegistrationRequestDto;
 import sultan.org.userservice.auth.dto.response.JwtAuthenticationResponseDto;
 import sultan.org.userservice.auth.service.AuthService;
 import sultan.org.userservice.common.util.JwtUtil;
+import sultan.org.userservice.user.repository.UserRepository;
 import sultan.org.userservice.user.service.UserRegistrationAsyncProcessor;
 
 
@@ -20,9 +21,11 @@ public class AuthServiceImpl implements AuthService {
     private final KeycloakClient keycloakClient;
     private final UserRegistrationAsyncProcessor asyncProcessor;
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
     @Override
     public JwtAuthenticationResponseDto loginUser(LoginRequestDto loginRequestDto) {
+        userRepository.findAll().stream().map(a->a.getKeycloakId());
         return keycloakClient.loginUser(loginRequestDto);
     }
     @Override
