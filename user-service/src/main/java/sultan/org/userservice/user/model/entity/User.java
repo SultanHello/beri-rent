@@ -29,7 +29,7 @@ public class User {
     @OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
     private UserProfile userProfile;
 
-    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private RatingSummary ratingSummary;
     public void setRatingSummary(RatingSummary rs) {
         this.ratingSummary = rs;
