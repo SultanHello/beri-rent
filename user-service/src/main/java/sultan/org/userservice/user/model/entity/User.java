@@ -31,6 +31,12 @@ public class User {
 
     @OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
     private RatingSummary ratingSummary;
+    public void setRatingSummary(RatingSummary rs) {
+        this.ratingSummary = rs;
+        if (rs != null) {
+            rs.setUser(this);
+        }
+    }
     @PrePersist
     private void onInsert(){
         this.createdAt=LocalDateTime.now();

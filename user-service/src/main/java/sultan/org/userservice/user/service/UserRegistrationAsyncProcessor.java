@@ -27,6 +27,7 @@ public class UserRegistrationAsyncProcessor {
                 .keycloakId(keycloakId)
                 .ratingSummary(new RatingSummary())
                 .build();
+        System.out.println("do sohronenie : "+ keycloakId);
         userService.save(user);
     }
 }
