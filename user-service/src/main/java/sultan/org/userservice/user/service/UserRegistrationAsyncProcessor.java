@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UserRegistrationAsyncProcessor {
     private final UserService userService;
 
-    @Async
+
     @Transactional
     public void saveUserAsync(RegistrationRequestDto dto, UUID keycloakId) {
         User user = User.builder()
