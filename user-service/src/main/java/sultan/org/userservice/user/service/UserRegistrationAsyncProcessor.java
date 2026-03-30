@@ -25,8 +25,8 @@ public class UserRegistrationAsyncProcessor {
                 .updatedAt(LocalDateTime.now())
                 .username(dto.getUsername())
                 .keycloakId(keycloakId)
-                .ratingSummary(new RatingSummary())
                 .build();
+        user.setRatingSummary(new RatingSummary());
         System.out.println("do sohronenie : "+ keycloakId);
         userService.save(user);
     }
