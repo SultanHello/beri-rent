@@ -29,7 +29,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void publish(Long itemId, Jwt ownerId) throws NotOwnerException {
         Item item = itemRepository.findById(itemId).orElseThrow(()->new ItemNotFoundException("item not found"));
-        if(item.getOwnerId().equals(ownerId)){
+        UUID UUIDofOwner = UUID.fromString(ownerId.getSubject());
+        System.out.println(item.getOwnerId());
+        if(item.getOwnerId().equals(UUIDofOwner)){
             item.setItemStatus(ItemStatus.ACTIVE);
             itemRepository.save(item);
         }else{
