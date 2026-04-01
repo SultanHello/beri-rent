@@ -1,12 +1,10 @@
 package sultan.org.itemservice.item.model.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sultan.org.itemservice.item.enums.ItemStatus;
 import sultan.org.itemservice.item.model.entity.Item;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
