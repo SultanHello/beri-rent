@@ -1,6 +1,13 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${REALM_URL}
+
   application:
     name: review-service
+
   kafka:
     bootstrap-servers: localhost:9092
     producer:
