@@ -13,6 +13,7 @@ public class RatingEventListener {
 
     @KafkaListener(topics = "review-created", groupId = "user-service")
     public void onReviewCreated(RatingEvent event) {
+        System.out.println("=== KAFKA EVENT RECEIVED: " + event.getTargetUserId() + " rating: " + event.getRating());
         ratingSummaryService.updateRating(event.getTargetUserId(), event.getRating());
     }
 }
