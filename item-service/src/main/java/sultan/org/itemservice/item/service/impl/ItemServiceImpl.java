@@ -2,6 +2,7 @@ package sultan.org.itemservice.item.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import sultan.org.itemservice.item.enums.ItemStatus;
@@ -10,6 +11,7 @@ import sultan.org.itemservice.item.exceptions.NotOwnerException;
 import sultan.org.itemservice.item.model.dto.ItemDto;
 import sultan.org.itemservice.item.model.dto.ItemRequestDto;
 import sultan.org.itemservice.item.model.entity.Item;
+import sultan.org.itemservice.item.model.entity.dto.ItemEvent;
 import sultan.org.itemservice.item.repository.ItemRepository;
 import sultan.org.itemservice.item.service.ItemService;
 
@@ -20,10 +22,23 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
+    private final KafkaTemplate<String, ItemEvent> kafkaTemplate;
     @Override
     public void createItem(ItemRequestDto itemRequestDto, UUID ownerId) {
         itemRequestDto.setOwnerId(ownerId);
-        itemRepository.save(getBuildItemFromDto(itemRequestDto));
+        Item item = itemRepository.save(getBuildItemFromDto(itemRequestDto));
+
+        // ✅ отправляем в Kafka
+        kafkaTemplate.send("item-created",new ItemEvent(
+                item.getId().toString(),
+                item.getOwnerId(),
+                item.getTitle(),
+                item.getDescription(),
+                item.getPrice_per_day(),
+                item.getItemStatus().name(),
+                item.getCreatedAt()
+        ));
+
     }
 
     @Override
