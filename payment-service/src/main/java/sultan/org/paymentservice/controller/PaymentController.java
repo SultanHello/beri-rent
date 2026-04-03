@@ -51,6 +51,10 @@ public class PaymentController {
                 .stream()
                 .anyMatch(p -> p.getStatus() == PaymentStatus.PAID);
     }
+    @PostMapping("/confirm/{paymentId}")
+    public void confirm(@PathVariable Long paymentId) {
+        paymentService.confirmPayment(paymentId);
+    }
 
     @PostMapping("/create-intent")
     public PaymentIntentResponse createIntent(@RequestParam Long paymentId) {

@@ -186,9 +186,8 @@ public class BookingServiceImpl implements BookingService {
         if (booking.getBookingStatus() != Status.PENDING) {
             throw new IllegalStateException("Only PENDING booking can be confirmed");
         }
-        boolean isPaid = paymentClient.isBookingPaid(bookingId);
-        if (!isPaid) {
-            throw new IllegalStateException("Booking cannot be confirmed without payment");
+        if (booking.getBookingStatus() != Status.PAID) {
+            throw new IllegalStateException("Only PAID booking can be confirmed");
         }
 
         booking.setBookingStatus(Status.CONFIRMED);
