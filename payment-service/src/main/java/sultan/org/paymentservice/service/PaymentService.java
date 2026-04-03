@@ -15,7 +15,7 @@ public interface PaymentService {
 
     List<Payment> getMyPayments(UUID payerId);
 
-    List<Payment> getByBooking(Long bookingId);
+    Payment getByBooking(Long bookingId);
 
     Payment getPayment(Long paymentId);
 

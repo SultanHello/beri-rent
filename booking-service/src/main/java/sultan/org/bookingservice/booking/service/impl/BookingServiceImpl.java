@@ -116,6 +116,10 @@ public class BookingServiceImpl implements BookingService {
                 && !booking.getOwnerId().equals(userId)) {
             throw new AccessDeniedException("No access to cancel booking");
         }
+        if (booking.getBookingStatus() == Status.PAID) {
+            Long paymentId = paymentClient.getByBooking(bookingId).getBookingId();
+            paymentClient.refund(paymentId);
+        }
 
         booking.setBookingStatus(Status.CANCELLED);
         booking.setUpdatedAt(LocalDateTime.now());
@@ -183,9 +187,7 @@ public class BookingServiceImpl implements BookingService {
             throw new AccessDeniedException("Only owner can confirm");
         }
 
-        if (booking.getBookingStatus() != Status.PENDING) {
-            throw new IllegalStateException("Only PENDING booking can be confirmed");
-        }
+
         if (booking.getBookingStatus() != Status.PAID) {
             throw new IllegalStateException("Only PAID booking can be confirmed");
         }

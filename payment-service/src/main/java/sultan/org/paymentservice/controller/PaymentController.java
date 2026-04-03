@@ -33,7 +33,7 @@ public class PaymentController {
     }
 
     @GetMapping("/booking/{bookingId}")
-    public List<Payment> byBooking(@PathVariable Long bookingId) {
+    public Payment byBooking(@PathVariable Long bookingId) {
         return paymentService.getByBooking(bookingId);
     }
 
@@ -47,9 +47,8 @@ public class PaymentController {
     }
     @GetMapping("/booking/{bookingId}/is-paid")
     public boolean isBookingPaid(@PathVariable Long bookingId) {
-        return paymentService.getByBooking(bookingId)
-                .stream()
-                .anyMatch(p -> p.getStatus() == PaymentStatus.PAID);
+        return paymentService.getByBooking(bookingId).getStatus() == PaymentStatus.PAID;
+
     }
     @PostMapping("/confirm/{paymentId}")
     public void confirm(@PathVariable Long paymentId) {

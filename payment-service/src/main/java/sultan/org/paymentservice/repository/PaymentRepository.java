@@ -12,5 +12,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     List<Payment> findByPayerId(UUID payerId);
 
-    List<Payment> findByBookingId(Long bookingId);
+
+    Payment findByBookingId(Long bookingId);
 }

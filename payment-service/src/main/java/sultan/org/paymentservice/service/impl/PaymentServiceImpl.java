@@ -42,7 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getByBooking(Long bookingId) {
+    public Payment getByBooking(Long bookingId) {
         return paymentRepository.findByBookingId(bookingId);
     }
 

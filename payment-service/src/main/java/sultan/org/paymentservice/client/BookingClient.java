@@ -11,7 +11,6 @@ import sultan.org.paymentservice.enums.PaymentStatus;
 @FeignClient(name = "booking-service")
 @Service
 public interface BookingClient {
-
     @PostMapping("/internal/bookings/{bookingId}/status")
     void updateStatus(@PathVariable Long bookingId,
                       @RequestBody PaymentStatus status);
