@@ -15,6 +15,6 @@ public interface PaymentClient {
     @PostMapping("/payments/refund/{bookingId}")
     void refund(@PathVariable Long bookingId);
 
-    @GetMapping("/api/payments/booking/{bookingId}")
+    @GetMapping("/payments/booking/{bookingId}")
     PaymentResponseDTO getByBooking(@PathVariable Long bookingId);
 }

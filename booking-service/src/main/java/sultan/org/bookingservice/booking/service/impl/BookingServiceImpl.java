@@ -88,9 +88,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking updateBooking(Long bookingId,
                                  UpdateBookingRequest request,
                                  UUID renterId) {
-
         Booking booking = getInternalBooking(bookingId);
-
         if (!booking.getRenterId().equals(renterId)) {
             throw new AccessDeniedException("Only renter can update booking");
         }
