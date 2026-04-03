@@ -2,6 +2,7 @@ package sultan.org.messagingservice.conversation.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sultan.org.messagingservice.conversation.entity.dto.CreateConversationRequestDto;
 import sultan.org.messagingservice.conversation.model.entity.Conversation;
 import sultan.org.messagingservice.conversation.repository.ConversationRepository;
 import sultan.org.messagingservice.conversation.service.ConversationService;
@@ -29,6 +30,7 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new RuntimeException("Conversation not found"));
     }
+
 
     @Override
     public Conversation createInternal(Long bookingId, UUID ownerId, UUID renterId) {

@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import sultan.org.messagingservice.message.model.dto.ChatMessageDto;
+import sultan.org.messagingservice.message.model.entity.Message;
 import sultan.org.messagingservice.message.service.MessageService;
 
 @Controller
@@ -16,16 +17,14 @@ public class ChatWebSocketController {
 
     @MessageMapping("/chat/{conversationId}")
     @SendTo("/topic/chat/{conversationId}")
-    public ChatMessageDto send(
+    public Message send(
             @DestinationVariable Long conversationId,
             ChatMessageDto dto
     ) {
-        messageService.saveMessage(
+        return messageService.send(
                 conversationId,
                 dto.getSenderId(),
                 dto.getContent()
         );
-
-        return dto;
     }
 }

@@ -27,6 +27,7 @@ class MessageServiceImpl implements MessageService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
+
         return repository.save(message);
     }
 
@@ -47,12 +48,5 @@ class MessageServiceImpl implements MessageService {
         repository.delete(message);
     }
 
-    @Override
-    public void saveMessage(Long conversationId, UUID senderId, String content) {
-        repository.save(Message.builder()
-                        .content(content)
-                        .conversationId(conversationId)
-                        .senderId(senderId)
-                .build());
-    }
+
 }

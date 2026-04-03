@@ -1,5 +1,6 @@
 package sultan.org.messagingservice.conversation.service;
 
+import sultan.org.messagingservice.conversation.entity.dto.CreateConversationRequestDto;
 import sultan.org.messagingservice.conversation.model.entity.Conversation;
 
 import java.util.List;

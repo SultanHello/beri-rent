@@ -3,9 +3,11 @@ package sultan.org.messagingservice.conversation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import sultan.org.messagingservice.conversation.entity.dto.CreateConversationRequestDto;
 import sultan.org.messagingservice.conversation.model.entity.Conversation;
 import sultan.org.messagingservice.conversation.service.ConversationService;
 import org.springframework.security.oauth2.jwt.Jwt;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -16,10 +18,21 @@ public class ConversationController {
 
     private final ConversationService conversationService;
 
+
     @GetMapping
     public List<Conversation> getAll(@AuthenticationPrincipal Jwt jwt) {
         return conversationService.getMyConversations(
                 UUID.fromString(jwt.getSubject())
+        );
+    }
+    @PostMapping
+    public Conversation create(@RequestBody CreateConversationRequestDto request,
+                               @AuthenticationPrincipal Jwt jwt) {
+        return conversationService.createInternal(
+                request.getBookingId(),
+                UUID.fromString(jwt.getSubject()),
+                request.getOwnerId()
+
         );
     }
 
