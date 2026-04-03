@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import sultan.org.bookingservice.booking.client.ItemClient;
+import sultan.org.bookingservice.booking.client.PaymentClient;
 import sultan.org.bookingservice.booking.client.ReviewClient;
 import sultan.org.bookingservice.booking.enums.Status;
 import sultan.org.bookingservice.booking.exceptions.BookingNotFoundException;
@@ -27,6 +28,7 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final ReviewClient reviewClient;
     private final ItemClient itemClient;
+    private final PaymentClient paymentClient;
 
     public List<Booking> getPendingReviews(UUID renterId) {
 
@@ -53,7 +55,16 @@ public class BookingServiceImpl implements BookingService {
         UUID ownerId = getOwnerId(request.getItemId());
         if(renterId.equals(ownerId)){
             throw new RuntimeException("owner cannot rent own item");
-        };
+        }
+
+        AvailabilityRequest availability = new AvailabilityRequest(
+                request.getItemId(),
+                request.getStartDate(),
+                request.getEndDate()
+        );
+        if (!checkAvailability(availability)) {
+            throw new IllegalStateException("Item is not available for selected dates");
+        }
 
         Booking booking = Booking.builder()
                 .itemId(request.getItemId())

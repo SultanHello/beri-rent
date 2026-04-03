@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "payment-service")
 public interface PaymentClient {
 
-    @GetMapping("/api/payments/booking/{bookingId}/is-paid")
+    @GetMapping("/payments/booking/{bookingId}/is-paid")
     boolean isBookingPaid(@PathVariable Long bookingId);
 }

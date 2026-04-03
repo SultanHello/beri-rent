@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import sultan.org.paymentservice.enums.PaymentStatus;
 import sultan.org.paymentservice.model.dto.CreatePaymentRequest;
 import sultan.org.paymentservice.model.dto.PaymentIntentResponse;
 import sultan.org.paymentservice.model.entity.Payment;
@@ -43,6 +44,12 @@ public class PaymentController {
                 request,
                 UUID.fromString(jwt.getSubject())
         );
+    }
+    @GetMapping("/booking/{bookingId}/is-paid")
+    public boolean isBookingPaid(@PathVariable Long bookingId) {
+        return paymentService.getByBooking(bookingId)
+                .stream()
+                .anyMatch(p -> p.getStatus() == PaymentStatus.PAID);
     }
 
     @PostMapping("/create-intent")
