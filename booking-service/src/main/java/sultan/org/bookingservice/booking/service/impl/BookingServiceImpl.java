@@ -1,6 +1,7 @@
 package sultan.org.bookingservice.booking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import sultan.org.bookingservice.booking.client.ItemClient;
@@ -8,6 +9,7 @@ import sultan.org.bookingservice.booking.client.PaymentClient;
 import sultan.org.bookingservice.booking.client.ReviewClient;
 import sultan.org.bookingservice.booking.enums.Status;
 import sultan.org.bookingservice.booking.exceptions.BookingNotFoundException;
+import sultan.org.bookingservice.booking.kafka.entity.BookingEvent;
 import sultan.org.bookingservice.booking.model.dto.AvailabilityRequest;
 import sultan.org.bookingservice.booking.model.dto.CreateBookingRequest;
 
@@ -29,6 +31,7 @@ public class BookingServiceImpl implements BookingService {
     private final ReviewClient reviewClient;
     private final ItemClient itemClient;
     private final PaymentClient paymentClient;
+    private final KafkaTemplate<String, BookingEvent> kafkaTemplate;
 
     public List<Booking> getPendingReviews(UUID renterId) {
 
@@ -75,6 +78,13 @@ public class BookingServiceImpl implements BookingService {
                 .bookingStatus(Status.PENDING)
                 .createdAt(LocalDateTime.now())
                 .build();
+
+        kafkaTemplate.send("booking-created", new BookingEvent(
+                booking.getId(),
+                booking.getOwnerId(),
+                booking.getRenterId(),
+                "CREATED"
+        ));
 
         return bookingRepository.save(booking);
     }
