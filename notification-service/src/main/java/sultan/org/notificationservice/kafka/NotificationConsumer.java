@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import sultan.org.notificationservice.kafka.event.BookingEvent;
+import sultan.org.notificationservice.kafka.event.ItemEvent;
 import sultan.org.notificationservice.kafka.event.PaymentEvent;
 import sultan.org.notificationservice.model.entity.Notification;
 import sultan.org.notificationservice.service.NotificationService;
