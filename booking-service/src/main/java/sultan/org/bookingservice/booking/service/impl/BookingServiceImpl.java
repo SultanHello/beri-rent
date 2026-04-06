@@ -79,14 +79,15 @@ public class BookingServiceImpl implements BookingService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
+
+        Booking savedBooking = bookingRepository.save(booking);
         kafkaTemplate.send("booking-created", new BookingEvent(
                 booking.getId(),
                 booking.getOwnerId(),
                 booking.getRenterId(),
                 "CREATED"
         ));
-
-        return bookingRepository.save(booking);
+        return savedBooking;
     }
     private UUID getOwnerId(Long itemId){
         return itemClient.getItemById(itemId);
@@ -133,6 +134,12 @@ public class BookingServiceImpl implements BookingService {
         booking.setUpdatedAt(LocalDateTime.now());
 
         bookingRepository.save(booking);
+        kafkaTemplate.send("booking-cancelled", new BookingEvent(
+                booking.getId(),
+                booking.getOwnerId(),
+                booking.getRenterId(),
+                "CANCELLED"
+        ));
     }
 
     /* ================= RENTER ================= */
@@ -204,6 +211,14 @@ public class BookingServiceImpl implements BookingService {
         booking.setUpdatedAt(LocalDateTime.now());
 
         bookingRepository.save(booking);
+
+        kafkaTemplate.send("booking-confirmed", new BookingEvent(
+                booking.getId(),
+                booking.getOwnerId(),
+                booking.getRenterId(),
+                "CONFIRMED"
+        ));
+
     }
 
     @Override
@@ -222,6 +237,12 @@ public class BookingServiceImpl implements BookingService {
         booking.setUpdatedAt(LocalDateTime.now());
 
         bookingRepository.save(booking);
+        kafkaTemplate.send("booking-completed", new BookingEvent(
+                booking.getId(),
+                booking.getOwnerId(),
+                booking.getRenterId(),
+                "COMPLETED"
+        ));
     }
 
     /* ================= AVAILABILITY ================= */

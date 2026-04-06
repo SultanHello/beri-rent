@@ -1,9 +1,11 @@
 package sultan.org.paymentservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import sultan.org.paymentservice.client.BookingClient;
 import sultan.org.paymentservice.enums.PaymentStatus;
+import sultan.org.paymentservice.kafka.event.PaymentEvent;
 import sultan.org.paymentservice.model.dto.CreatePaymentRequest;
 import sultan.org.paymentservice.model.dto.PaymentIntentResponse;
 import sultan.org.paymentservice.model.dto.ProcessPaymentRequest;
@@ -21,12 +23,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final BookingClient bookingClient; // Feign / RestTemplate
+    private final KafkaTemplate<String, PaymentEvent> kafkaTemplate;
 
     @Override
     public Payment createPayment(CreatePaymentRequest request, UUID payerId) {
         Payment payment = Payment.builder()
                 .bookingId(request.getBookingId())
-                .payerId(payerId)
+                .renterId(payerId)
                 .amount(request.getAmount())
                 .status(PaymentStatus.CREATED)
                 .createdAt(LocalDateTime.now())
@@ -74,6 +77,13 @@ public class PaymentServiceImpl implements PaymentService {
 
         // 🔥 уведомляем Booking
         bookingClient.updateStatus(payment.getBookingId(), PaymentStatus.PAID);
+        kafkaTemplate.send("payment-confirmed", new PaymentEvent(
+                payment.getId(),
+                payment.getBookingId(),
+                payment.getRenterId(),
+                payment.getOwnerId(),
+                "PAID"// нужно добавить в Payment entity
+        ));
     }
 
     @Override

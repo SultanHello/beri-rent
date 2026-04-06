@@ -20,10 +20,11 @@ public class Payment{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long bookingId;
 
-    private UUID payerId;
+    private UUID ownerId;
+
+    private UUID renterId;
 
     private BigDecimal amount;
 
