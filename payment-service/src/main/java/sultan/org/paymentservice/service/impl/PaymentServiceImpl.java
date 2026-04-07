@@ -41,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> getMyPayments(UUID payerId) {
-        return paymentRepository.findByPayerId(payerId);
+        return paymentRepository.findByRenterId(payerId);
     }
 
     @Override
