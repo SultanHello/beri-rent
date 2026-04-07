@@ -172,12 +172,29 @@ public Page<ItemDocument> search(String q, String category, int page, int size) 
     }
 
     public List<String> autocomplete(String text){
-        return null;
+        NativeQuery query = new NativeQueryBuilder()
+                .withQuery(qb -> qb.bool(b -> {
+                    b.must(m -> m.matchPhrasePrefix(mp -> mp
+                            .field("title")
+                            .query(text)
+                    ));
+                    return b;
+                }))
+                .withPageable(PageRequest.of(0, 5))
+                .build();
+
+        SearchHits<ItemDocument> hits =
+                elasticsearchOperations.search(query, ItemDocument.class);
+
+        return hits.stream()
+                .map(SearchHit::getContent)
+                .map(ItemDocument::getTitle)
+                .toList();
 
 
     }
 
-    public Page<ItemDocument> nearby(Double lat, Double lng, Double radius, int page, int size) {
-        return null;
-    }
+//    public Page<ItemDocument> nearby(Double lat, Double lng, Double radius, int page, int size) {
+//        return null;
+//    }
 }

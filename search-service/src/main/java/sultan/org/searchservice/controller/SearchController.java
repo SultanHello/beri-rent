@@ -50,16 +50,16 @@ public class SearchController {
         return searchService.autocomplete(q);
     }
 
-    @GetMapping("/items/nearby")
-    public Page<ItemDocument> nearby(
-            @RequestParam Double lat,
-            @RequestParam Double lng,
-            @RequestParam(defaultValue = "10") Double radius,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size
-    ) {
-        return searchService.nearby(lat, lng, radius, page, size);
-    }
+//    @GetMapping("/items/nearby")
+//    public Page<ItemDocument> nearby(
+//            @RequestParam Double lat,
+//            @RequestParam Double lng,
+//            @RequestParam(defaultValue = "10") Double radius,
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "20") int size
+//    ) {
+//        return searchService.nearby(lat, lng, radius, page, size);
+//    }
 
     @GetMapping("/facets")
     public Map<String, Object> facets() {
