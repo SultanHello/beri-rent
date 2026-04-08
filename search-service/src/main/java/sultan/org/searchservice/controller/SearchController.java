@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/search")
 @RequiredArgsConstructor
 public class SearchController {
 
@@ -23,7 +23,7 @@ public class SearchController {
     @GetMapping("/items")
     public Page<ItemDocument> searchItems(
             @RequestParam(required = false) String q,
-            @RequestParam(required = false) String category,
+//            @RequestParam(required = false) String category,
 //            @RequestParam(required = false) String city,
 //            @RequestParam(required = false) Double minPrice,
 //            @RequestParam(required = false) Double maxPrice,
@@ -35,7 +35,10 @@ public class SearchController {
             @RequestParam(defaultValue = "20") int size
     ) {
         return searchService.search(
-                q, category, page, size
+                q,
+//                category,
+                page,
+                size
         );
 //        return searchService.search(
 //                q, category, city,

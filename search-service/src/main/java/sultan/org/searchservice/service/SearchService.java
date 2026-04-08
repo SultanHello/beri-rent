@@ -113,7 +113,10 @@ public class SearchService {
 //                hits.getTotalHits()
 //        );
 //    }
-public Page<ItemDocument> search(String q, String category, int page, int size) {
+public Page<ItemDocument> search(String q
+//        ,String category
+        ,int page
+        ,int size) {
     NativeQuery query = new NativeQueryBuilder()
             .withQuery(qb -> qb.bool(b -> {
                 if (q != null && !q.isBlank()) {
@@ -122,12 +125,12 @@ public Page<ItemDocument> search(String q, String category, int page, int size) 
                             .fields("title", "description")
                     ));
                 }
-                if (category != null && !category.isBlank()) {
-                    b.filter(f -> f.term(t -> t
-                            .field("category.keyword")
-                            .value(category)
-                    ));
-                }
+//                if (category != null && !category.isBlank()) {
+//                    b.filter(f -> f.term(t -> t
+//                            .field("category.keyword")
+//                            .value(category)
+//                    ));
+//                }
                 return b;
             }))
             .withPageable(PageRequest.of(page, size))
