@@ -12,7 +12,8 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
-        spring.json.value.default.type: sultan.org.searchservice.kafka.entity.ItemEvent
+        spring.json.use.type.headers: true
+        spring.json.type.mapping: "sultan.org.itemservice.item.model.entity.dto.ItemEvent:sultan.org.searchservice.kafka.event.ItemEvent"
 
 server:
   port: 8088

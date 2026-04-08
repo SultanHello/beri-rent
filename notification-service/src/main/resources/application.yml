@@ -1,4 +1,10 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${REALM_URL}
+
   application:
     name: notification-service
 
@@ -11,6 +17,17 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  kafka:
+    consumer:
+      # Ключ — строка, значение — JSON
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: "sultan.org.itemservice.item.model.entity.dto.ItemEvent:sultan.org.notificationservice.kafka.event.ItemEvent,sultan.org.bookingservice.dto.BookingEvent:sultan.org.notificationservice.kafka.event.BookingEvent,sultan.org.paymentservice.dto.PaymentEvent:sultan.org.notificationservice.kafka.event.PaymentEvent"
+        # Это важно: использовать информацию о типе из заголовков сообщения
+        spring.json.use.type.headers: true
 
 server:
   port: 8087
