@@ -15,7 +15,9 @@ public class ItemEventConsumer {
 
     @KafkaListener(topics = "item-created", groupId = "search-service")
     public void consume(ItemEvent event) {
-        elasticsearchOperations.save(ItemDocument.builder()
+        System.out.println("Received event: " + event);
+
+        ItemDocument doc = ItemDocument.builder()
                 .id(event.getId())
                 .ownerId(event.getOwnerId())
                 .title(event.getTitle())
@@ -23,7 +25,10 @@ public class ItemEventConsumer {
                 .pricePerDay(event.getPricePerDay())
                 .itemStatus(event.getItemStatus())
                 .createdAt(event.getCreatedAt())
-                .build()
-        );
+                .build();
+
+        System.out.println("Saving document: " + doc);
+        elasticsearchOperations.save(doc);
+        System.out.println("Saved successfully");
     }
 }
