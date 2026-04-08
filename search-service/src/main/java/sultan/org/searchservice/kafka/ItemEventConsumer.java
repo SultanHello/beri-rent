@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import sultan.org.searchservice.kafka.entity.ItemEvent;
+import sultan.org.searchservice.kafka.event.ItemEvent;
 import sultan.org.searchservice.model.entity.ItemDocument;
 
 @Service

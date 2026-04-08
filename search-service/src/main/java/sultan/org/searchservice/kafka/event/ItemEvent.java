@@ -1,4 +1,4 @@
-package sultan.org.searchservice.kafka.entity;
+package sultan.org.searchservice.kafka.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
