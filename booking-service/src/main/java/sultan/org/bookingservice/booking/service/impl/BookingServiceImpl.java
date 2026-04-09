@@ -82,9 +82,9 @@ public class BookingServiceImpl implements BookingService {
 
         Booking savedBooking = bookingRepository.save(booking);
         kafkaTemplate.send("booking-created", new BookingEvent(
-                booking.getId(),
-                booking.getOwnerId(),
-                booking.getRenterId(),
+                savedBooking.getId(),
+                savedBooking.getOwnerId(),
+                savedBooking.getRenterId(),
                 "CREATED"
         ));
         return savedBooking;
