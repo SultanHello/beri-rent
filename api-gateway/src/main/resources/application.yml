@@ -1,3 +1,21 @@
+
+resilience4j:
+  timelimiter:
+    configs:
+      default:
+        # Увеличиваем время ожидания до 5-10 секунд.
+        # Это даст время на "прогрев" Java, Eureka и Keycloak.
+        timeout-duration: 5s
+  circuitbreaker:
+    configs:
+      default:
+        # Сколько запросов анализировать, прежде чем решить, что сервис "упал"
+        sliding-window-size: 10
+        # Если 50% и более запросов упали, цепь размыкается
+        failure-rate-threshold: 50
+        # Время, через которое CB попробует снова пустить запрос к сервису
+        wait-duration-in-open-state: 10s
+
 spring:
   security:
     oauth2:
