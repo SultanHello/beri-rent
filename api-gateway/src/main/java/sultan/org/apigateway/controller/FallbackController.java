@@ -10,18 +10,20 @@ import java.util.Map;
 @RestController
 @RequestMapping("/fallback")
 public class FallbackController {
-    @GetMapping("/user-service")
+
+    @RequestMapping("/user-service")
     public Mono<Map<String, String>> userServiceFallback() {
         return Mono.just(Map.of(
-            "error", "User Service is temporarily unavailable",
-            "message", "Please try again later"
+                "error", "User Service is temporarily unavailable",
+                "message", "Please try again later"
         ));
     }
-    @GetMapping("/item-service")
+
+    @RequestMapping("/item-service")
     public Mono<Map<String, String>> itemServiceFallback() {
         return Mono.just(Map.of(
-            "error", "Item Service is temporarily unavailable",
-            "message", "Please try again later"
+                "error", "Item Service is temporarily unavailable",
+                "message", "Please try again later"
         ));
     }
 }
