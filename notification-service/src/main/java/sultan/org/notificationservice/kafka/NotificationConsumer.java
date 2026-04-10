@@ -14,6 +14,7 @@ import sultan.org.notificationservice.service.NotificationService;
 public class NotificationConsumer {
     private final NotificationService notificationService;
 
+
     @KafkaListener(topics = "booking-created", groupId = "notification-service")
     public void onBookingCreated(BookingEvent event) {
         notificationService.send(Notification.builder()
