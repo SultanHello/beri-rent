@@ -30,6 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = Payment.builder()
                 .bookingId(request.getBookingId())
                 .renterId(payerId)
+                .ownerId(request.getBookingId())
                 .amount(request.getAmount())
                 .status(PaymentStatus.CREATED)
                 .createdAt(LocalDateTime.now())
