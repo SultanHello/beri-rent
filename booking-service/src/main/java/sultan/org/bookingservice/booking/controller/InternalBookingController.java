@@ -6,6 +6,8 @@ import sultan.org.bookingservice.booking.model.dto.UpdateStatusRequest;
 import sultan.org.bookingservice.booking.model.entity.Booking;
 import sultan.org.bookingservice.booking.service.BookingService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/internal/bookings")
 @RequiredArgsConstructor
@@ -25,6 +27,10 @@ public class InternalBookingController {
                 bookingId,
                 request.getStatus()
         );
+    }
+    @GetMapping("/{bookingId}/ownerId")
+    public UUID getOwnerId(@PathVariable Long bookingId){
+        return bookingService.getOwnerId(bookingId);
     }
 
 }

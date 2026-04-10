@@ -51,11 +51,18 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    @Override
+    public UUID getOwnerId(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id: " + bookingId));
+        return booking.getOwnerId();
+    }
+
     /* ================= CREATE ================= */
 
     @Override
     public Booking createBooking(CreateBookingRequest request, UUID renterId) {
-        UUID ownerId = getOwnerId(request.getItemId());
+        UUID ownerId = getOwnerIdByItemId(request.getItemId());
         if(renterId.equals(ownerId)){
             throw new RuntimeException("owner cannot rent own item");
         }
@@ -89,7 +96,7 @@ public class BookingServiceImpl implements BookingService {
         ));
         return savedBooking;
     }
-    private UUID getOwnerId(Long itemId){
+    private UUID getOwnerIdByItemId(Long itemId){
         return itemClient.getItemById(itemId);
     }
 
