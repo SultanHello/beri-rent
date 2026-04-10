@@ -15,7 +15,7 @@ public class NotificationConsumer {
     private final NotificationService notificationService;
 
 
-    @KafkaListener(topics = "booking-created", groupId = "notification-service")
+    @KafkaListener(topics = "booking-created", groupId = "notification-service", containerFactory = "bookingFactory")
     public void onBookingCreated(BookingEvent event) {
         notificationService.send(Notification.builder()
                 .userId(event.getOwnerId())
@@ -24,8 +24,7 @@ public class NotificationConsumer {
                 .type("BOOKING_CREATED")
                 .build());
     }
-
-    @KafkaListener(topics = "booking-confirmed", groupId = "notification-service")
+    @KafkaListener(topics = "booking-confirmed", groupId = "notification-service", containerFactory = "bookingFactory")
     public void onBookingConfirmed(BookingEvent event) {
         notificationService.send(Notification.builder()
                 .userId(event.getRenterId())
@@ -34,8 +33,7 @@ public class NotificationConsumer {
                 .type("BOOKING_CONFIRMED")
                 .build());
     }
-
-    @KafkaListener(topics = "booking-cancelled", groupId = "notification-service")
+    @KafkaListener(topics = "booking-cancelled", groupId = "notification-service", containerFactory = "bookingFactory")
     public void onBookingCancelled(BookingEvent event) {
         notificationService.send(Notification.builder()
                 .userId(event.getOwnerId())
@@ -51,8 +49,7 @@ public class NotificationConsumer {
                 .type("BOOKING_CANCELLED")
                 .build());
     }
-
-    @KafkaListener(topics = "booking-completed", groupId = "notification-service")
+    @KafkaListener(topics = "booking-completed", groupId = "notification-service", containerFactory = "bookingFactory")
     public void onBookingCompleted(BookingEvent event) {
         notificationService.send(Notification.builder()
                 .userId(event.getRenterId())
@@ -61,8 +58,7 @@ public class NotificationConsumer {
                 .type("BOOKING_COMPLETED")
                 .build());
     }
-
-    @KafkaListener(topics = "payment-confirmed", groupId = "notification-service")
+    @KafkaListener(topics = "payment-confirmed", groupId = "notification-service", containerFactory = "paymentFactory")
     public void onPaymentConfirmed(PaymentEvent event) {
         notificationService.send(Notification.builder()
                 .userId(event.getRenterId())
@@ -78,8 +74,8 @@ public class NotificationConsumer {
                 .type("PAYMENT_RECEIVED")
                 .build());
     }
+    @KafkaListener(topics = "item-created", groupId = "notification-service", containerFactory = "itemFactory")
 
-    @KafkaListener(topics = "item-created", groupId = "notification-service")
     public void onItemCreated(ItemEvent event) {
         notificationService.send(Notification.builder()
                 .userId(event.getOwnerId())
