@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import sultan.org.paymentservice.enums.PaymentStatus;
+import sultan.org.paymentservice.model.dto.UpdateBookingStatusRequest;
 
 import java.util.UUID;
 
@@ -19,5 +20,5 @@ public interface BookingClient {
 
     @PostMapping("/internal/bookings/{bookingId}/status")
     void updateStatus(@PathVariable Long bookingId,
-                      @RequestBody PaymentStatus status);
+                      @RequestBody UpdateBookingStatusRequest status);
 }

@@ -9,6 +9,7 @@ import sultan.org.paymentservice.kafka.event.PaymentEvent;
 import sultan.org.paymentservice.model.dto.CreatePaymentRequest;
 import sultan.org.paymentservice.model.dto.PaymentIntentResponse;
 import sultan.org.paymentservice.model.dto.ProcessPaymentRequest;
+import sultan.org.paymentservice.model.dto.UpdateBookingStatusRequest;
 import sultan.org.paymentservice.model.entity.Payment;
 import sultan.org.paymentservice.repository.PaymentRepository;
 import sultan.org.paymentservice.service.PaymentService;
@@ -75,9 +76,8 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setStatus(PaymentStatus.PAID);
         payment.setUpdatedAt(LocalDateTime.now());
         paymentRepository.save(payment);
-
         // 🔥 уведомляем Booking
-        bookingClient.updateStatus(payment.getBookingId(), PaymentStatus.PAID);
+        bookingClient.updateStatus(payment.getBookingId(), new UpdateBookingStatusRequest(PaymentStatus.PAID));
         kafkaTemplate.send("payment-confirmed", new PaymentEvent(
                 payment.getId(),
                 payment.getBookingId(),
