@@ -30,7 +30,7 @@ public class ConversationController {
                                @AuthenticationPrincipal Jwt jwt) {
         return conversationService.createInternal(
                 request.getBookingId(),
-                UUID.fromString(jwt.getSubject()),
+                request.getRenterId(),
                 request.getOwnerId()
 
         );
