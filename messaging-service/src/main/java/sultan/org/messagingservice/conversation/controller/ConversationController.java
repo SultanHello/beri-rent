@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/conversations")
+@RequestMapping("/conversations")
 public class ConversationController {
 
     private final ConversationService conversationService;
