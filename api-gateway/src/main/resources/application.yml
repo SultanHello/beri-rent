@@ -89,6 +89,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
+        - id: messaging-service-ws
+          uri: lb:ws://messaging-service
+          predicates:
+            - Path=/api/ws/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
         - id: review-service
           uri: lb://review-service
           predicates:

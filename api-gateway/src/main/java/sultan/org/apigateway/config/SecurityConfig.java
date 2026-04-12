@@ -21,7 +21,8 @@ public class SecurityConfig {
                     "/api/items/**",
                     "/api/search/**",
                     "/actuator/**",
-                    "/fallback/**"
+                    "/fallback/**",
+                        "/api/ws/**"
                 ).permitAll()
                 .anyExchange().authenticated()
             )
