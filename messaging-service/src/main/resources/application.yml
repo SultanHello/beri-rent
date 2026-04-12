@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${REALM_URL}
   application:
     name: messaging-service
   datasource:
