@@ -3,14 +3,18 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
 <script>
+    const token = "Bearer eyJhbGciOiJSUzI1NiIs..."; // вставьте сюда
+
     const client = new StompJs.Client({
         brokerURL: 'ws://localhost:8085/ws/chat',
+        connectHeaders: {
+            Authorization: token
+        },
         onConnect: () => {
             console.log('Connected');
-
             client.subscribe('/topic/chat/3', (message) => {
                 console.log('Новое сообщение:', JSON.parse(message.body));
-            });
+            }, { Authorization: token });
         }
     });
     client.activate();
