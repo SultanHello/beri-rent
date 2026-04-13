@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
+<script>
+    const client = new StompJs.Client({
+        brokerURL: 'ws://localhost:8085/ws/chat',
+        onConnect: () => {
+            console.log('Connected');
+            client.publish({
+                destination: '/app/chat/3',
+                body: JSON.stringify({
+                    senderId: '513a5703-e03d-48cc-99bb-cfee8d6ae94c',
+                    content: 'Привет!'
+                })
+            });
+        }
+    });
+    client.activate();
+</script>
+</body>
+</html>

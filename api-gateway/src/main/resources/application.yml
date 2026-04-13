@@ -90,7 +90,7 @@ spring:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
         - id: messaging-service-ws
-          uri: lb:ws://messaging-service
+          uri: lb://messaging-service
           predicates:
             - Path=/api/ws/**
           filters:

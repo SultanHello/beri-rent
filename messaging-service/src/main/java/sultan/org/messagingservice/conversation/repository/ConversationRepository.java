@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
 
     List<Conversation> findByOwnerIdOrRenterId(UUID ownerId, UUID renterId);
+
 }

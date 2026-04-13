@@ -19,4 +19,6 @@ public interface UserService {
     User me(String token);
 
     List<UserDto> getAllUsers();
+
+    UUID getUserId(String token);
 }

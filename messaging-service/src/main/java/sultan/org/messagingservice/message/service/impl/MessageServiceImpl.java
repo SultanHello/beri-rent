@@ -19,6 +19,8 @@ class MessageServiceImpl implements MessageService {
 
     @Override
     public Message send(Long conversationId, UUID senderId, String content) {
+        System.out.println(">>> send() called: conversationId=" + conversationId + ", senderId=" + senderId);
+
         Message message = Message.builder()
                 .conversationId(conversationId)
                 .senderId(senderId)
@@ -27,8 +29,9 @@ class MessageServiceImpl implements MessageService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-
-        return repository.save(message);
+        Message saved = repository.save(message);
+        System.out.println(">>> saved with id=" + saved.getId());
+        return saved;
     }
 
     @Override

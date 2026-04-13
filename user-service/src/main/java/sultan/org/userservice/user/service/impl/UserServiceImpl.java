@@ -63,6 +63,12 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAllUsers() {
         return this.convertToDtoList(userRepository.findAll());
     }
+
+    @Override
+    public UUID getUserId(String token) {
+        return jwtUtil.extractSubject(token);
+    }
+
     private List<UserDto> convertToDtoList(List<User> users){
         return users.stream().map(UserDto::fromEntity).toList();
 
