@@ -18,12 +18,12 @@ public class MessageController{
 
     private final MessageService messageService;
 
-    @GetMapping("/api/conversations/{id}/messages")
+    @GetMapping("/conversations/{id}/messages")
     public List<Message> messages(@PathVariable Long id) {
         return messageService.getMessages(id);
     }
 
-    @PostMapping("/api/conversations/{id}/messages")
+    @PostMapping("/conversations/{id}/messages")
     public Message send(@PathVariable Long id,
                         @RequestBody String content,
                         @AuthenticationPrincipal Jwt jwt) {
@@ -35,7 +35,7 @@ public class MessageController{
         );
     }
 
-    @DeleteMapping("/api/messages/{messageId}")
+    @DeleteMapping("/messages/{messageId}")
     public void delete(@PathVariable Long messageId,
                        @AuthenticationPrincipal Jwt jwt) throws AccessDeniedException {
         messageService.delete(
