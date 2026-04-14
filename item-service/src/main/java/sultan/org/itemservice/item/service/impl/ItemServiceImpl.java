@@ -2,6 +2,7 @@ package sultan.org.itemservice.item.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ import sultan.org.itemservice.item.service.ItemService;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final KafkaTemplate<String, ItemEvent> kafkaTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     @Override
     public void createItem(ItemRequestDto itemRequestDto, UUID ownerId) {
         itemRequestDto.setOwnerId(ownerId);
@@ -70,12 +73,10 @@ public class ItemServiceImpl implements ItemService {
     public ItemDto getItemById(Long itemId) {
         String key = "item:" + itemId;
         Item cached = (Item) redisTemplate.opsForValue().get(key);
-        if (cached != null) return cached;
-
-        Item item = itemRepository.findById(itemId).orElseThrow();
+        if (cached != null) return ItemDto.fromEntity(cached);
+        Item item = itemRepository.getItemById(itemId).orElseThrow(()->new ItemNotFoundException("item not found"));
         redisTemplate.opsForValue().set(key, item, 10, TimeUnit.MINUTES);
-        return item;
-        return ItemDto.fromEntity(itemRepository.getItemById(itemId).orElseThrow(()->new ItemNotFoundException("item not found")));
+        return ItemDto.fromEntity(item);
     }
 
     private static Item getBuildItemFromDto(ItemRequestDto itemRequestDto) {
