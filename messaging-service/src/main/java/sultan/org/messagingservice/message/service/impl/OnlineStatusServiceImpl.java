@@ -3,13 +3,14 @@ package sultan.org.messagingservice.message.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import sultan.org.messagingservice.message.service.OnlineStatusService;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-public class OnlineStatusServiceImpl {
+public class OnlineStatusServiceImpl implements OnlineStatusService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 

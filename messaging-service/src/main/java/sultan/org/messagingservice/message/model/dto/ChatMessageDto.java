@@ -8,6 +8,5 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ChatMessageDto {
-    private UUID senderId;
     private String content;
 }

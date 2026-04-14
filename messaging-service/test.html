@@ -1,27 +1,57 @@
 <!DOCTYPE html>
 <html>
+<head><title>Отправитель</title></head>
 <body>
+<h2>Отправитель</h2>
+<input id="msgInput" placeholder="Введите сообщение" />
+<button onclick="sendMessage()">Отправить</button>
+<div id="log"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
 <script>
-    const token = "Bearer eyJhbG..."; // вставьте токен
+    const token = "Bearer eyJhbG..."; // ← вставьте токен отправителя
+    const conversationId = 3;
 
     const client = new StompJs.Client({
         brokerURL: 'ws://localhost:8085/ws/chat',
         connectHeaders: {
             Authorization: token
         },
+
         onConnect: () => {
-            console.log('Connected');
-            client.publish({
-                destination: '/app/chat/3',
-                headers: { Authorization: token },
-                body: JSON.stringify({
-                    content: 'Привет!'
-                })
-            });
-        }
+            log('✅ Подключён');
+
+            // Подписываемся тоже — чтобы видеть свои отправленные сообщения
+            client.subscribe(`/topic/chat/${conversationId}`, (message) => {
+                const msg = JSON.parse(message.body);
+                log(`📨 Получено: ${msg.content}`);
+            }, { Authorization: token });
+        },
+
+        onDisconnect: () => log('❌ Отключён'),
+        onStompError: (frame) => log('Ошибка: ' + frame.headers['message'])
     });
+
     client.activate();
+
+    function sendMessage() {
+        const content = document.getElementById('msgInput').value;
+        if (!content) return;
+
+        client.publish({
+            destination: `/app/chat/${conversationId}`,
+            headers: { Authorization: token },
+            body: JSON.stringify({ content: content })
+        });
+
+        log(`📤 Отправлено: ${content}`);
+        document.getElementById('msgInput').value = '';
+    }
+
+    function log(text) {
+        const div = document.getElementById('log');
+        div.innerHTML += `<p>${new Date().toLocaleTimeString()} — ${text}</p>`;
+    }
 </script>
 </body>
 </html>
