@@ -19,4 +19,6 @@ public interface ItemService {
     List<ItemDto> getAllItems();
 
     UUID getOwnerIdByItemId(Long itemId);
+
+    ItemDto getItemById(Long itemId);
 }

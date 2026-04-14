@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import sultan.org.itemservice.item.exceptions.NotOwnerException;
 import sultan.org.itemservice.item.model.dto.ItemDto;
 import sultan.org.itemservice.item.model.dto.ItemRequestDto;
+import sultan.org.itemservice.item.model.entity.Item;
 import sultan.org.itemservice.item.service.ItemService;
 
 import java.util.List;
@@ -34,6 +35,12 @@ public class ItemController {
         return itemService.getAllItems();
 
     }
+    @GetMapping("/{itemId}/item")
+    public ItemDto getItem(@PathVariable Long itemId){
+        return itemService.getItemById(itemId);
+
+    }
+
     @GetMapping("/{itemId}")
     public UUID getOwnerIdByItemId(@PathVariable Long itemId){
         return itemService.getOwnerIdByItemId(itemId);

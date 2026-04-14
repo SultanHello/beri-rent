@@ -66,6 +66,18 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findById(itemId).map(Item::getOwnerId).orElseThrow(()->new ItemNotFoundException("item not found"));
     }
 
+    @Override
+    public ItemDto getItemById(Long itemId) {
+        String key = "item:" + itemId;
+        Item cached = (Item) redisTemplate.opsForValue().get(key);
+        if (cached != null) return cached;
+
+        Item item = itemRepository.findById(itemId).orElseThrow();
+        redisTemplate.opsForValue().set(key, item, 10, TimeUnit.MINUTES);
+        return item;
+        return ItemDto.fromEntity(itemRepository.getItemById(itemId).orElseThrow(()->new ItemNotFoundException("item not found")));
+    }
+
     private static Item getBuildItemFromDto(ItemRequestDto itemRequestDto) {
         return Item.builder()
                 .id(itemRequestDto.getId())
