@@ -17,5 +17,9 @@ public class ItemEvent {
     private String description;
     private int pricePerDay;
     private String itemStatus;
+    private String category;
+    private String city;
+    private Double latitude;
+    private Double longitude;
     private LocalDateTime createdAt;
 }

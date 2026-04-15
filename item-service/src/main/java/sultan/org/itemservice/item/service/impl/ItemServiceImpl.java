@@ -92,6 +92,10 @@ public class ItemServiceImpl implements ItemService {
                 .title(itemRequestDto.getTitle())
                 .description(itemRequestDto.getDescription())
                 .pricePerDay(itemRequestDto.getPricePerDay())
+                .longitude(itemRequestDto.getLongitude())
+                .latitude(itemRequestDto.getLatitude())
+                .category(itemRequestDto.getCategory())
+                .city(itemRequestDto.getCity())
                 .ownerId(itemRequestDto.getOwnerId())
                 .build();
     }

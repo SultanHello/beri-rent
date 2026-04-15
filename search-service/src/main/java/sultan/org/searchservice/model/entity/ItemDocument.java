@@ -19,22 +19,31 @@ import java.util.UUID;
 public class ItemDocument {
 
     @Id
-    private String id; // В ES лучше String
+    private String id;
 
     private UUID ownerId;
 
+    @Field(type = FieldType.Text)
     private String title;
 
+    @Field(type = FieldType.Text)
     private String description;
 
-    private int pricePerDay;
+    @Field(type = FieldType.Integer)
+    private Integer pricePerDay;
 
+    @Field(type = FieldType.Keyword)
     private String itemStatus;
+
+    @Field(type = FieldType.Keyword)
+    private String category;
+
+    @Field(type = FieldType.Keyword)
+    private String city;
 
     @Field(type = FieldType.Date, format = DateFormat.date_hour_minute)
     private LocalDateTime createdAt;
 
-
     @GeoPointField
-    private GeoPoint location; // если будешь делать nearby поиск
+    private GeoPoint location;
 }

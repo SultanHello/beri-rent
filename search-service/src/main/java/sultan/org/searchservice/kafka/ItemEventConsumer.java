@@ -2,6 +2,7 @@ package sultan.org.searchservice.kafka;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import sultan.org.searchservice.kafka.event.ItemEvent;
@@ -25,6 +26,10 @@ public class ItemEventConsumer {
                 .pricePerDay(event.getPricePerDay())
                 .itemStatus(event.getItemStatus())
                 .createdAt(event.getCreatedAt())
+                .location(new GeoPoint(event.getLatitude(),event.getLongitude()))
+                .city(event.getCity())
+                .category(event.getCategory())
+
                 .build();
 
         System.out.println("Saving document: " + doc);
