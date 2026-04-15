@@ -25,126 +25,95 @@ public class SearchService {
 
     private final ElasticsearchOperations elasticsearchOperations;
 
-//    public Page<ItemDocument> search(
-//            String q,
-//            String category,
-//            String city,
-//            Double minPrice,
-//            Double maxPrice,
-//            Double lat,
-//            Double lng,
-//            Double radius,
-//            String sortBy,
-//            int page,
-//            int size
-//    ) {
-//
-//        NativeQuery query = new NativeQueryBuilder()
-//                .withQuery(qb -> qb.bool(b -> {
-//
-//                    // 🔎 Full text
-//                    if (q != null && !q.isBlank()) {
-//                        b.must(m -> m.multiMatch(mm -> mm
-//                                .query(q)
-//                                .fields("title", "description")
-//                        ));
-//                    }
-//
-//                    // 📂 Category filter (keyword!)
-//                    if (category != null && !category.isBlank()) {
-//                        b.filter(f -> f.term(t -> t
-//                                .field("category.keyword")
-//                                .value(category)
-//                        ));
-//                    }
-//
-//                    // 🏙 City filter (keyword!)
-//                    if (city != null && !city.isBlank()) {
-//                        b.filter(f -> f.term(t -> t
-//                                .field("city.keyword")
-//                                .value(city)
-//                        ));
-//                    }
-//
-//                    // 💰 Price range (NEW API)
-//                    if (minPrice != null || maxPrice != null) {
-//                        b.filter(f -> f.range(r -> {
-//                            r.field("price");
-//
-//                            if (minPrice != null) {
-//                                r.gte(JsonData.of(minPrice));
-//                            }
-//
-//                            if (maxPrice != null) {
-//                                r.lte(JsonData.of(maxPrice));
-//                            }
-//
-//                            return r;
-//                        }));
-//                    }
-//
-//                    // 🌍 Geo distance
-//                    if (lat != null && lng != null && radius != null) {
-//                        b.filter(f -> f.geoDistance(g -> g
-//                                .field("location")
-//                                .location(l -> l.latlon(ll -> ll
-//                                        .lat(lat)
-//                                        .lon(lng)
-//                                ))
-//                                .distance(radius + "km")
-//                        ));
-//                    }
-//
-//                    return b;
-//                }))
-//                .withPageable(PageRequest.of(page, size))
-//                .build();
-//
-//        SearchHits<ItemDocument> hits =
-//                elasticsearchOperations.search(query, ItemDocument.class);
-//
-//        List<ItemDocument> content = hits.stream()
-//                .map(SearchHit::getContent)
-//                .toList();
-//
-//        return new PageImpl<>(
-//                content,
-//                PageRequest.of(page, size),
-//                hits.getTotalHits()
-//        );
-//    }
-public Page<ItemDocument> search(String q
-//        ,String category
-        ,int page
-        ,int size) {
-    NativeQuery query = new NativeQueryBuilder()
-            .withQuery(qb -> qb.bool(b -> {
-                if (q != null && !q.isBlank()) {
-                    b.must(m -> m.multiMatch(mm -> mm
-                            .query(q)
-                            .fields("title", "description")
-                    ));
-                }
-//                if (category != null && !category.isBlank()) {
-//                    b.filter(f -> f.term(t -> t
-//                            .field("category.keyword")
-//                            .value(category)
-//                    ));
-//                }
-                return b;
-            }))
-            .withPageable(PageRequest.of(page, size))
-            .build();
+    public Page<ItemDocument> search(
+            String q,
+            String category,
+            String city,
+            Double minPrice,
+            Double maxPrice,
+            Double lat,
+            Double lng,
+            Double radius,
+            String sortBy,
+            int page,
+            int size
+    ) {
 
-    SearchHits<ItemDocument> hits =
-            elasticsearchOperations.search(query, ItemDocument.class);
+        NativeQuery query = new NativeQueryBuilder()
+                .withQuery(qb -> qb.bool(b -> {
 
-    return new PageImpl<>(
-            hits.stream().map(SearchHit::getContent).toList(),
-            PageRequest.of(page, size),
-            hits.getTotalHits()
-    );
-}
+                    // 🔎 Full text
+                    if (q != null && !q.isBlank()) {
+                        b.must(m -> m.multiMatch(mm -> mm
+                                .query(q)
+                                .fields("title", "description")
+                        ));
+                    }
+
+                    // 📂 Category filter (keyword!)
+                    if (category != null && !category.isBlank()) {
+                        b.filter(f -> f.term(t -> t
+                                .field("category.keyword")
+                                .value(category)
+                        ));
+                    }
+
+                    // 🏙 City filter (keyword!)
+                    if (city != null && !city.isBlank()) {
+                        b.filter(f -> f.term(t -> t
+                                .field("city.keyword")
+                                .value(city)
+                        ));
+                    }
+
+                    // 💰 Price range (NEW API)
+                    if (minPrice != null || maxPrice != null) {
+                        b.filter(f -> f.range(r -> {
+                            r.field("price");
+
+                            if (minPrice != null) {
+                                r.gte(JsonData.of(minPrice));
+                            }
+
+                            if (maxPrice != null) {
+                                r.lte(JsonData.of(maxPrice));
+                            }
+
+                            return r;
+                        }));
+                    }
+
+                    // 🌍 Geo distance
+                    if (lat != null && lng != null && radius != null) {
+                        b.filter(f -> f.geoDistance(g -> g
+                                .field("location")
+                                .location(l -> l.latlon(ll -> ll
+                                        .lat(lat)
+                                        .lon(lng)
+                                ))
+                                .distance(radius + "km")
+                        ));
+                    }
+
+                    return b;
+                }))
+                .withPageable(PageRequest.of(page, size))
+                .build();
+
+        SearchHits<ItemDocument> hits =
+                elasticsearchOperations.search(query, ItemDocument.class);
+
+        List<ItemDocument> content = hits.stream()
+                .map(SearchHit::getContent)
+                .toList();
+
+        return new PageImpl<>(
+                content,
+                PageRequest.of(page, size),
+                hits.getTotalHits()
+        );
+    }
+
 
     public Map<String, Object> getFacets() {
 
