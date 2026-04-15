@@ -8,9 +8,11 @@ import sultan.org.itemservice.item.exceptions.NotOwnerException;
 import sultan.org.itemservice.item.model.dto.ItemDto;
 import sultan.org.itemservice.item.model.dto.ItemRequestDto;
 import sultan.org.itemservice.item.model.entity.Item;
+import sultan.org.itemservice.item.service.ItemAttributesService;
 import sultan.org.itemservice.item.service.ItemService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+    private final ItemAttributesService itemAttributesService;
 
 
     @PostMapping("/create")
@@ -40,6 +43,17 @@ public class ItemController {
         return itemService.getItemById(itemId);
 
     }
+    @PostMapping("/{itemId}/attributes")
+    public void saveAttributes(@PathVariable Long itemId,
+                               @RequestBody Map<String, Object> attributes) {
+        itemAttributesService.save(itemId, attributes);
+    }
+
+    @GetMapping("/{itemId}/attributes")
+    public Map<String, Object> getAttributes(@PathVariable Long itemId) {
+        return itemAttributesService.getByItemId(itemId);
+    }
+
 
     @GetMapping("/{itemId}")
     public UUID getOwnerIdByItemId(@PathVariable Long itemId){
