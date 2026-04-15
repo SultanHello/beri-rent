@@ -16,6 +16,8 @@ spring:
       ddl-auto: update
     show-sql: true
   data:
+    mongodb:
+      uri: mongodb://mongodb:27017/item-service
     redis:
       host: localhost
       port: 6379

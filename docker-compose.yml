@@ -58,6 +58,17 @@ services:
       - redis_data:/data
     networks:
       - app-network
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - your-network
+  volumes:
+    mongo_data:
 
 
   keycloak:
