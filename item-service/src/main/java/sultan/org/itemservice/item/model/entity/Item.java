@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 
+
 @Entity
 @Table(name = "items")
 @Getter
@@ -18,13 +19,27 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private UUID ownerId;
+
     private String title;
     private String description;
-    private int price_per_day;
+
+    private int pricePerDay;
+
+    @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
+
+    private String category;
+    private String city;
+
+    // Геолокация
+    private Double latitude;
+    private Double longitude;
+
     private LocalDateTime createdAt;
 }

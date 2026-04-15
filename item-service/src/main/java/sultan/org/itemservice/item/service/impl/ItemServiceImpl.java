@@ -37,9 +37,14 @@ public class ItemServiceImpl implements ItemService {
                 item.getOwnerId(),
                 item.getTitle(),
                 item.getDescription(),
-                item.getPrice_per_day(),
+                item.getPricePerDay(),
                 item.getItemStatus().name(),
+                item.getCategory(),
+                item.getCity(),
+                item.getLatitude(),
+                item.getLongitude(),
                 item.getCreatedAt()
+
         ));
 
 
@@ -86,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
                 .itemStatus(ItemStatus.DRAFT)
                 .title(itemRequestDto.getTitle())
                 .description(itemRequestDto.getDescription())
-                .price_per_day(itemRequestDto.getPrice_per_day())
+                .pricePerDay(itemRequestDto.getPricePerDay())
                 .ownerId(itemRequestDto.getOwnerId())
                 .build();
     }

@@ -15,6 +15,12 @@ public class ItemRequestDto {
     private UUID ownerId;
     private String title;
     private String description;
-    private int price_per_day;
+    private int pricePerDay;
     private LocalDateTime createdAt;
+    private String category;
+    private String city;
+
+    // Геолокация
+    private Double latitude;
+    private Double longitude;
 }
