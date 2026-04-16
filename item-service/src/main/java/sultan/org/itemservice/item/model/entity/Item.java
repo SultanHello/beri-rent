@@ -7,6 +7,8 @@ import sultan.org.itemservice.item.enums.ItemStatus;
 import sultan.org.itemservice.item.service.ItemService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,6 +35,9 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemImage> images = new ArrayList<>();
 
     private String category;
     private String city;
