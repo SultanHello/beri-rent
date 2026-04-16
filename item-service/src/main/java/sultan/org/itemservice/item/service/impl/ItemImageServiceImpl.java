@@ -11,8 +11,10 @@ import sultan.org.itemservice.item.service.ItemImageService;
 @Service
 @RequiredArgsConstructor
 public class ItemImageServiceImpl implements ItemImageService {
+
     private final ItemImageRepository itemImageRepository;
     private final ItemRepository itemRepository;
+    private final MinioService minioService;
 
     public void setMainImage(Long itemId, String imageUrl) {
         Item item = itemRepository.findById(itemId)
@@ -45,7 +47,15 @@ public class ItemImageServiceImpl implements ItemImageService {
         itemImageRepository.save(image);
     }
 
-    public void deleteImage(Long imageId) {
-        itemImageRepository.deleteById(imageId);
+    public void deleteImage(Long itemId, Long imageId) {
+        ItemImage image = itemImageRepository.findById(imageId)
+                .orElseThrow(() -> new RuntimeException("Image not found"));
+
+        if (!image.getItem().getId().equals(itemId)) {
+            throw new RuntimeException("Image does not belong to this item");
+        }
+
+        minioService.delete(image.getImageUrl());
+        itemImageRepository.delete(image);
     }
 }
