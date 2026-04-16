@@ -1,14 +1,12 @@
 package sultan.org.itemservice.item.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "item_images")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
