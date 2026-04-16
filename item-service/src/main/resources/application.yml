@@ -1,4 +1,5 @@
 spring:
+
   security:
     oauth2:
       resourceserver:
@@ -16,6 +17,7 @@ spring:
       ddl-auto: update
     show-sql: true
   data:
+
     mongodb:
       uri: mongodb://mongodb:27017/item-service
     redis:
@@ -31,7 +33,11 @@ spring:
 
 server:
   port: 8083
-
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: items
 eureka:
   client:
     service-url:
