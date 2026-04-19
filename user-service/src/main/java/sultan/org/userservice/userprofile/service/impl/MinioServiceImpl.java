@@ -5,12 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sultan.org.userservice.userprofile.service.MinioService;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class MinioService {
+public class MinioServiceImpl implements MinioService {
 
     private final MinioClient minioClient;
 
