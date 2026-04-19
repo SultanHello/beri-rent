@@ -39,6 +39,11 @@ keycloak:
     password: ${KEYCLOAK_ADMIN_PASSWORD}
 server:
   port: 8081  # Уникальный порт для каждого сервиса
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: users
 
 
 eureka:
