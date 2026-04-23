@@ -4,6 +4,7 @@ package sultan.org.userservice.userprofile.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sultan.org.userservice.userprofile.model.dto.request.UserProfileRequestDto;
 import sultan.org.userservice.userprofile.model.dto.response.UserProfileResponseDto;
 import sultan.org.userservice.userprofile.model.entity.UserProfile;
@@ -25,6 +26,13 @@ public class UserProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<UserProfileResponseDto> getUserProfile(@PathVariable Long id){
         return ResponseEntity.ok(userProfileService.getProfileByUserId(id));
+    }
+    @PostMapping("/avatar")
+    public ResponseEntity<Void> uploadAvatar(
+            @RequestParam MultipartFile file,
+            @RequestHeader("Authorization") String token) {
+        userProfileService.uploadAvatar(file, token);
+        return ResponseEntity.ok().build();
     }
 
 
