@@ -117,6 +117,63 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
+        - id: user-service-docs
+          uri: lb://user-service
+          predicates:
+            - Path=/docs/user-service/**
+          filters:
+            - RewritePath=/docs/user-service/(?<segment>.*), /${segment}
+
+        - id: item-service-docs
+          uri: lb://item-service
+          predicates:
+            - Path=/docs/item-service/**
+          filters:
+            - RewritePath=/docs/item-service/(?<segment>.*), /${segment}
+
+        - id: booking-service-docs
+          uri: lb://booking-service
+          predicates:
+            - Path=/docs/booking-service/**
+          filters:
+            - RewritePath=/docs/booking-service/(?<segment>.*), /${segment}
+
+        - id: payment-service-docs
+          uri: lb://payment-service
+          predicates:
+            - Path=/docs/payment-service/**
+          filters:
+            - RewritePath=/docs/payment-service/(?<segment>.*), /${segment}
+
+        - id: messaging-service-docs
+          uri: lb://messaging-service
+          predicates:
+            - Path=/docs/messaging-service/**
+          filters:
+            - RewritePath=/docs/messaging-service/(?<segment>.*), /${segment}
+
+        - id: review-service-docs
+          uri: lb://review-service
+          predicates:
+            - Path=/docs/review-service/**
+          filters:
+            - RewritePath=/docs/review-service/(?<segment>.*), /${segment}
+
+        - id: search-service-docs
+          uri: lb://search-service
+          predicates:
+            - Path=/docs/search-service/**
+          filters:
+            - RewritePath=/docs/search-service/(?<segment>.*), /${segment}
+
+        - id: notification-service-docs
+          uri: lb://notification-service
+          predicates:
+            - Path=/docs/notification-service/**
+          filters:
+            - RewritePath=/docs/notification-service/(?<segment>.*), /${segment}
+
+
       globalcors:
         cors-configurations:
           '[/**]':
