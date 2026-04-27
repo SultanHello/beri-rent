@@ -19,7 +19,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
 server:
   port: 8085
 

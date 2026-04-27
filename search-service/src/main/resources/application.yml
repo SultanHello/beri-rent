@@ -23,7 +23,11 @@ server:
   port: 8088
 
 
-
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
 eureka:
   client:
     service-url:

@@ -29,7 +29,11 @@ spring:
         spring.json.type.mapping: "sultan.org.itemservice.item.model.entity.dto.ItemEvent:sultan.org.notificationservice.kafka.event.ItemEvent,sultan.org.bookingservice.dto.BookingEvent:sultan.org.notificationservice.kafka.event.BookingEvent,sultan.org.paymentservice.dto.PaymentEvent:sultan.org.notificationservice.kafka.event.PaymentEvent"
         # Это важно: использовать информацию о типе из заголовков сообщения
         spring.json.use.type.headers: false
-
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
 server:
   port: 8087
 

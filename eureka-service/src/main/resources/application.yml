@@ -18,7 +18,11 @@ eureka:
 
     enable-self-preservation: false
     eviction-interval-timer-in-ms: 10000
-
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
 management:
   endpoints:
     web:
