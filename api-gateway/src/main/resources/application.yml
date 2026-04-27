@@ -190,7 +190,28 @@ spring:
             allowed-headers: "*"
             allow-credentials: true
             max-age: 3600
-
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: User Service
+        url: /docs/user-service/v3/api-docs
+      - name: Item Service
+        url: /docs/item-service/v3/api-docs
+      - name: Booking Service
+        url: /docs/booking-service/v3/api-docs
+      - name: Payment Service
+        url: /docs/payment-service/v3/api-docs
+      - name: Messaging Service
+        url: /docs/messaging-service/v3/api-docs
+      - name: Review Service
+        url: /docs/review-service/v3/api-docs
+      - name: Search Service
+        url: /docs/search-service/v3/api-docs
+      - name: Notification Service
+        url: /docs/notification-service/v3/api-docs
+  api-docs:
+    enabled: false
 eureka:
   client:
     service-url:

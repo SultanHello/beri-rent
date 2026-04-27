@@ -22,7 +22,12 @@ public class SecurityConfig {
                     "/api/search/**",
                     "/actuator/**",
                     "/fallback/**",
-                        "/api/ws/**"
+                        "/api/ws/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/webjars/**",
+                        "/v3/api-docs/**",
+                        "/docs/**"
                 ).permitAll()
                 .anyExchange().authenticated()
             )
