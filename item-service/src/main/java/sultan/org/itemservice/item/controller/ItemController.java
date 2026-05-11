@@ -6,8 +6,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import sultan.org.itemservice.item.exceptions.NotOwnerException;
 import sultan.org.itemservice.item.model.dto.ItemDto;
+
 import sultan.org.itemservice.item.model.dto.ItemRequestDto;
-import sultan.org.itemservice.item.model.entity.Item;
 import sultan.org.itemservice.item.service.ItemAttributesService;
 import sultan.org.itemservice.item.service.ItemService;
 

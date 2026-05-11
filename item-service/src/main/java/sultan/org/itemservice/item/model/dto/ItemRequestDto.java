@@ -1,26 +1,22 @@
 package sultan.org.itemservice.item.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import sultan.org.itemservice.item.enums.ItemStatus;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
-@Getter
-@Setter
+@Data
 public class ItemRequestDto {
     private Long id;
     private UUID ownerId;
     private String title;
     private String description;
     private int pricePerDay;
-    private LocalDateTime createdAt;
+    private ItemStatus itemStatus;
     private String category;
     private String city;
-
-    // Геолокация
     private Double latitude;
     private Double longitude;
+    private LocalDateTime createdAt;
 }
